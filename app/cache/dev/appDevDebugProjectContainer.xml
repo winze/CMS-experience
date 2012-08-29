@@ -17,6 +17,8 @@
       <parameter key="AsseticBundle">Symfony\Bundle\AsseticBundle\AsseticBundle</parameter>
       <parameter key="SensioFrameworkExtraBundle">Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle</parameter>
       <parameter key="JMSSecurityExtraBundle">JMS\SecurityExtraBundle\JMSSecurityExtraBundle</parameter>
+      <parameter key="DoctrineMongoDBBundle">Symfony\Bundle\DoctrineMongoDBBundle\DoctrineMongoDBBundle</parameter>
+      <parameter key="WinzePageBuilderBundle">Winze\PageBuilderBundle\WinzePageBuilderBundle</parameter>
       <parameter key="AcmeDemoBundle">Acme\DemoBundle\AcmeDemoBundle</parameter>
       <parameter key="WebProfilerBundle">Symfony\Bundle\WebProfilerBundle\WebProfilerBundle</parameter>
       <parameter key="SensioDistributionBundle">Sensio\Bundle\DistributionBundle\SensioDistributionBundle</parameter>
@@ -336,6 +338,8 @@
       <parameter>AsseticBundle</parameter>
       <parameter>SensioFrameworkExtraBundle</parameter>
       <parameter>JMSSecurityExtraBundle</parameter>
+      <parameter>DoctrineMongoDBBundle</parameter>
+      <parameter>WinzePageBuilderBundle</parameter>
       <parameter>AcmeDemoBundle</parameter>
       <parameter>WebProfilerBundle</parameter>
       <parameter>SensioDistributionBundle</parameter>
@@ -381,6 +385,40 @@
     <parameter key="security.extra.controller_listener.class">JMS\SecurityExtraBundle\Controller\ControllerListener</parameter>
     <parameter key="security.access.iddqd_voter.class">JMS\SecurityExtraBundle\Security\Authorization\Voter\IddqdVoter</parameter>
     <parameter key="security.extra.secure_all_services">false</parameter>
+    <parameter key="doctrine.odm.mongodb.connection.class">Doctrine\MongoDB\Connection</parameter>
+    <parameter key="doctrine.odm.mongodb.configuration.class">Doctrine\ODM\MongoDB\Configuration</parameter>
+    <parameter key="doctrine.odm.mongodb.document_manager.class">Doctrine\ODM\MongoDB\DocumentManager</parameter>
+    <parameter key="doctrine.odm.mongodb.logger.class">Symfony\Bundle\DoctrineMongoDBBundle\Logger\DoctrineMongoDBLogger</parameter>
+    <parameter key="doctrine.odm.mongodb.data_collector.class">Symfony\Bundle\DoctrineMongoDBBundle\DataCollector\DoctrineMongoDBDataCollector</parameter>
+    <parameter key="doctrine.odm.mongodb.event_manager.class">Doctrine\Common\EventManager</parameter>
+    <parameter key="doctrine.odm.mongodb.proxy_namespace">Proxies</parameter>
+    <parameter key="doctrine.odm.mongodb.proxy_dir">/var/www/rd/vj/app/cache/dev/doctrine/odm/mongodb/Proxies</parameter>
+    <parameter key="doctrine.odm.mongodb.auto_generate_proxy_classes">false</parameter>
+    <parameter key="doctrine.odm.mongodb.hydrator_namespace">Hydrators</parameter>
+    <parameter key="doctrine.odm.mongodb.hydrator_dir">/var/www/rd/vj/app/cache/dev/doctrine/odm/mongodb/Hydrators</parameter>
+    <parameter key="doctrine.odm.mongodb.auto_generate_hydrator_classes">false</parameter>
+    <parameter key="doctrine.odm.mongodb.cache.array.class">Doctrine\Common\Cache\ArrayCache</parameter>
+    <parameter key="doctrine.odm.mongodb.cache.apc.class">Doctrine\Common\Cache\ApcCache</parameter>
+    <parameter key="doctrine.odm.mongodb.cache.memcache.class">Doctrine\Common\Cache\MemcacheCache</parameter>
+    <parameter key="doctrine.odm.mongodb.cache.memcache_host">localhost</parameter>
+    <parameter key="doctrine.odm.mongodb.cache.memcache_port">11211</parameter>
+    <parameter key="doctrine.odm.mongodb.cache.memcache_instance.class">Memcache</parameter>
+    <parameter key="doctrine.odm.mongodb.cache.xcache.class">Doctrine\Common\Cache\XcacheCache</parameter>
+    <parameter key="doctrine.odm.mongodb.metadata.driver_chain.class">Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain</parameter>
+    <parameter key="doctrine.odm.mongodb.metadata.annotation.class">Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver</parameter>
+    <parameter key="doctrine.odm.mongodb.metadata.xml.class">Symfony\Bundle\DoctrineMongoDBBundle\Mapping\Driver\XmlDriver</parameter>
+    <parameter key="doctrine.odm.mongodb.metadata.yml.class">Symfony\Bundle\DoctrineMongoDBBundle\Mapping\Driver\YamlDriver</parameter>
+    <parameter key="doctrine.odm.mongodb.mapping_dirs" type="collection"/>
+    <parameter key="doctrine.odm.mongodb.xml_mapping_dirs" type="collection"/>
+    <parameter key="doctrine.odm.mongodb.yml_mapping_dirs" type="collection"/>
+    <parameter key="doctrine.odm.mongodb.document_dirs" type="collection"/>
+    <parameter key="doctrine.odm.mongodb.security.user.provider.class">Symfony\Bundle\DoctrineMongoDBBundle\Security\DocumentUserProvider</parameter>
+    <parameter key="doctrine.odm.mongodb.proxy_cache_warmer.class">Symfony\Bundle\DoctrineMongoDBBundle\CacheWarmer\ProxyCacheWarmer</parameter>
+    <parameter key="doctrine.odm.mongodb.hydrator_cache_warmer.class">Symfony\Bundle\DoctrineMongoDBBundle\CacheWarmer\HydratorCacheWarmer</parameter>
+    <parameter key="doctrine_odm.mongodb.validator.unique.class">Symfony\Bundle\DoctrineMongoDBBundle\Validator\Constraints\UniqueValidator</parameter>
+    <parameter key="doctrine.odm.mongodb.document_managers" type="collection">
+      <parameter>default</parameter>
+    </parameter>
     <parameter key="web_profiler.debug_toolbar.class">Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener</parameter>
     <parameter key="web_profiler.debug_toolbar.intercept_redirects">false</parameter>
     <parameter key="web_profiler.debug_toolbar.mode">2</parameter>
@@ -425,6 +463,10 @@
       <parameter key="data_collector.doctrine" type="collection">
         <parameter>db</parameter>
         <parameter>DoctrineBundle:Collector:db</parameter>
+      </parameter>
+      <parameter key="doctrine.odm.mongodb.data_collector" type="collection">
+        <parameter>mongodb</parameter>
+        <parameter>DoctrineMongoDBBundle:Collector:mongodb</parameter>
       </parameter>
     </parameter>
   </parameters>
@@ -677,6 +719,18 @@
             <argument type="service" id="doctrine"/>
           </service>
         </argument>
+        <argument type="service">
+          <service class="Symfony\Bundle\DoctrineMongoDBBundle\CacheWarmer\ProxyCacheWarmer" public="false">
+            <tag name="kernel.cache_warmer"/>
+            <argument type="service" id="service_container"/>
+          </service>
+        </argument>
+        <argument type="service">
+          <service class="Symfony\Bundle\DoctrineMongoDBBundle\CacheWarmer\HydratorCacheWarmer" public="false">
+            <tag name="kernel.cache_warmer"/>
+            <argument type="service" id="service_container"/>
+          </service>
+        </argument>
       </argument>
     </service>
     <service id="request" scope="request"/>
@@ -758,6 +812,7 @@
               <argument key="url">form.type.url</argument>
               <argument key="csrf">form.type.csrf</argument>
               <argument key="entity">form.type.entity</argument>
+              <argument key="document">form.type.mongodb_document</argument>
             </argument>
             <argument type="collection">
               <argument key="field" type="collection">
@@ -770,6 +825,7 @@
             <argument type="collection">
               <argument>form.type_guesser.validator</argument>
               <argument>form.type_guesser.doctrine</argument>
+              <argument>form.type_guesser.doctrine.mongodb</argument>
             </argument>
           </service>
         </argument>
@@ -885,6 +941,7 @@
           <argument type="service" id="service_container"/>
           <argument type="collection">
             <argument key="doctrine.orm.validator.unique">doctrine.orm.validator.unique</argument>
+            <argument key="doctrine_odm.mongodb.unique">doctrine_odm.mongodb.validator.unique</argument>
           </argument>
         </service>
       </argument>
@@ -1007,6 +1064,14 @@
             <tag name="data_collector" template="DoctrineBundle:Collector:db" id="db"/>
             <argument type="service" id="doctrine"/>
             <argument type="service" id="doctrine.dbal.logger"/>
+          </service>
+        </argument>
+      </call>
+      <call method="add">
+        <argument type="service">
+          <service class="Symfony\Bundle\DoctrineMongoDBBundle\DataCollector\DoctrineMongoDBDataCollector" public="false">
+            <tag name="data_collector" template="DoctrineMongoDBBundle:Collector:mongodb" id="mongodb"/>
+            <argument type="service" id="doctrine.odm.mongodb.logger"/>
           </service>
         </argument>
       </call>
@@ -1945,6 +2010,60 @@
               <argument type="service">
                 <service class="%assetic.directory_resource.class%" public="false">
                   <argument type="service" id="templating.loader"/>
+                  <argument>DoctrineMongoDBBundle</argument>
+                  <argument>/var/www/rd/vj/app/Resources/DoctrineMongoDBBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>DoctrineMongoDBBundle</argument>
+                  <argument>/var/www/rd/vj/vendor/bundles/Symfony/Bundle/DoctrineMongoDBBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>WinzePageBuilderBundle</argument>
+                  <argument>/var/www/rd/vj/app/Resources/WinzePageBuilderBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>WinzePageBuilderBundle</argument>
+                  <argument>/var/www/rd/vj/src/Winze/PageBuilderBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
                   <argument>AcmeDemoBundle</argument>
                   <argument>/var/www/rd/vj/app/Resources/AcmeDemoBundle/views</argument>
                   <argument>/\.[^.]+\.twig$/</argument>
@@ -2141,6 +2260,108 @@
       <tag name="kernel.event_listener" event="kernel.controller" method="onCoreController" priority="-255"/>
       <argument type="service" id="service_container"/>
       <argument type="service" id="annotation_reader"/>
+    </service>
+    <service id="form.type.mongodb_document" class="Symfony\Bundle\DoctrineMongoDBBundle\Form\Type\DocumentType">
+      <tag name="form.type" alias="document"/>
+      <argument type="service" id="doctrine.odm.mongodb.default_document_manager"/>
+    </service>
+    <service id="form.type_guesser.doctrine.mongodb" class="Symfony\Bundle\DoctrineMongoDBBundle\Form\DoctrineMongoDBTypeGuesser">
+      <tag name="form.type_guesser"/>
+      <argument type="service" id="doctrine.odm.mongodb.default_document_manager"/>
+    </service>
+    <service id="doctrine.odm.mongodb.metadata.chain" class="Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain"/>
+    <service id="doctrine.odm.mongodb.metadata.annotation" class="Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver">
+      <argument type="service" id="annotation_reader"/>
+      <argument type="collection"/>
+    </service>
+    <service id="doctrine.odm.mongodb.metadata.xml" class="Symfony\Bundle\DoctrineMongoDBBundle\Mapping\Driver\XmlDriver">
+      <argument type="collection"/>
+    </service>
+    <service id="doctrine.odm.mongodb.metadata.yml" class="Symfony\Bundle\DoctrineMongoDBBundle\Mapping\Driver\YamlDriver">
+      <argument type="collection"/>
+    </service>
+    <service id="doctrine.odm.mongodb.cache.array" class="Doctrine\Common\Cache\ArrayCache"/>
+    <service id="doctrine.odm.mongodb.logger" class="Symfony\Bundle\DoctrineMongoDBBundle\Logger\DoctrineMongoDBLogger">
+      <tag name="monolog.logger" channel="doctrine"/>
+      <argument type="service" id="monolog.logger.doctrine"/>
+    </service>
+    <service id="doctrine_odm.mongodb.validator.unique" class="Symfony\Bundle\DoctrineMongoDBBundle\Validator\Constraints\UniqueValidator">
+      <tag name="validator.constraint_validator" alias="doctrine_odm.mongodb.unique"/>
+      <argument type="service" id="service_container"/>
+    </service>
+    <service id="doctrine.odm.mongodb.default_connection" class="Doctrine\MongoDB\Connection">
+      <argument>mongodb://localhost:27017</argument>
+      <argument type="collection">
+        <argument key="connect">true</argument>
+      </argument>
+      <argument type="service" id="doctrine.odm.mongodb.default_configuration"/>
+    </service>
+    <service id="doctrine.odm.mongodb.default_configuration" class="Doctrine\ODM\MongoDB\Configuration">
+      <call method="setDocumentNamespaces">
+        <argument type="collection">
+          <argument key="WinzePageBuilderBundle">Winze\PageBuilderBundle\Document</argument>
+        </argument>
+      </call>
+      <call method="setMetadataCacheImpl">
+        <argument type="service" id="doctrine.odm.mongodb.default_metadata_cache"/>
+      </call>
+      <call method="setMetadataDriverImpl">
+        <argument type="service">
+          <service class="Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain" public="false">
+            <call method="addDriver">
+              <argument type="service">
+                <service class="Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver" public="false">
+                  <argument type="service" id="annotation_reader"/>
+                  <argument type="collection">
+                    <argument>/var/www/rd/vj/src/Winze/PageBuilderBundle/Document</argument>
+                  </argument>
+                </service>
+              </argument>
+              <argument>Winze\PageBuilderBundle\Document</argument>
+            </call>
+          </service>
+        </argument>
+      </call>
+      <call method="setProxyDir">
+        <argument>/var/www/rd/vj/app/cache/dev/doctrine/odm/mongodb/Proxies</argument>
+      </call>
+      <call method="setProxyNamespace">
+        <argument>Proxies</argument>
+      </call>
+      <call method="setAutoGenerateProxyClasses">
+        <argument>false</argument>
+      </call>
+      <call method="setHydratorDir">
+        <argument>/var/www/rd/vj/app/cache/dev/doctrine/odm/mongodb/Hydrators</argument>
+      </call>
+      <call method="setHydratorNamespace">
+        <argument>Hydrators</argument>
+      </call>
+      <call method="setAutoGenerateHydratorClasses">
+        <argument>false</argument>
+      </call>
+      <call method="setDefaultDB">
+        <argument>rd</argument>
+      </call>
+      <call method="setRetryConnect">
+        <argument>0</argument>
+      </call>
+      <call method="setRetryQuery">
+        <argument>0</argument>
+      </call>
+      <call method="setLoggerCallable">
+        <argument type="collection">
+          <argument type="service" id="doctrine.odm.mongodb.logger"/>
+          <argument>logQuery</argument>
+        </argument>
+      </call>
+    </service>
+    <service id="doctrine.odm.mongodb.default_metadata_cache" class="Doctrine\Common\Cache\ArrayCache"/>
+    <service id="doctrine.odm.mongodb.default_document_manager" class="Doctrine\ODM\MongoDB\DocumentManager" factory-method="create">
+      <tag name="doctrine.odm.mongodb.document_manager"/>
+      <argument type="service" id="doctrine.odm.mongodb.default_connection"/>
+      <argument type="service" id="doctrine.odm.mongodb.default_configuration"/>
+      <argument type="service" id="doctrine.odm.mongodb.event_manager"/>
     </service>
     <service id="twig.extension.acme.demo" class="Acme\DemoBundle\Twig\Extension\DemoExtension" public="false">
       <tag name="twig.extension"/>
@@ -2356,8 +2577,14 @@
     <service id="mailer" class="Swift_Mailer">
       <argument type="service" id="swiftmailer.transport"/>
     </service>
+    <service id="doctrine.odm.mongodb.event_manager" class="Doctrine\Common\EventManager">
+      <tag name="doctrine.odm.mongodb.event_manager"/>
+    </service>
     <service id="debug.event_dispatcher" alias="event_dispatcher"/>
     <service id="database_connection" alias="doctrine.dbal.default_connection"/>
     <service id="doctrine.orm.entity_manager" alias="doctrine.orm.default_entity_manager"/>
+    <service id="doctrine.odm.mongodb.cache" alias="doctrine.odm.mongodb.cache.array"/>
+    <service id="doctrine.odm.mongodb.metadata.annotation_reader" alias="annotation_reader"/>
+    <service id="doctrine.odm.mongodb.document_manager" alias="doctrine.odm.mongodb.default_document_manager"/>
   </services>
 </container>

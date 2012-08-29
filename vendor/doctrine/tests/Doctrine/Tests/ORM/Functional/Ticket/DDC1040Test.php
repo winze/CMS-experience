@@ -24,7 +24,7 @@ class DDC1040Test extends \Doctrine\Tests\OrmFunctionalTestCase
         $user->name = "John Galt";
         $user->username = "jgalt";
         $user->status = "inactive";
-        
+
         $article = new CmsArticle();
         $article->topic = "This is John Galt speaking!";
         $article->text = "Yadda Yadda!";

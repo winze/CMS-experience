@@ -49,11 +49,13 @@ class YamlExporter extends AbstractExporter
     public function exportClassMetadata(ClassMetadataInfo $metadata)
     {
         $array = array();
+
         if ($metadata->isMappedSuperclass) {
             $array['type'] = 'mappedSuperclass';
         } else {
             $array['type'] = 'entity';
         }
+
         $array['table'] = $metadata->table['name'];
 
         if (isset($metadata->table['schema'])) {
@@ -79,6 +81,10 @@ class YamlExporter extends AbstractExporter
 
         if (isset($metadata->table['indexes'])) {
             $array['indexes'] = $metadata->table['indexes'];
+        }
+
+        if ($metadata->customRepositoryClassName) {
+            $array['repositoryClass'] = $metadata->customRepositoryClassName;
         }
 
         if (isset($metadata->table['uniqueConstraints'])) {
@@ -141,6 +147,9 @@ class YamlExporter extends AbstractExporter
             if ($associationMapping['isCascadeDetach']) {
                 $cascade[] = 'detach';
             }
+            if (count($cascade) === 5) {
+                $cascade = array('all');
+            }
             $associationMappingArray = array(
                 'targetEntity' => $associationMapping['targetEntity'],
                 'cascade'     => $cascade,
@@ -154,9 +163,6 @@ class YamlExporter extends AbstractExporter
                     if (isset($joinColumn['onDelete'])) {
                         $newJoinColumns[$joinColumn['name']]['onDelete'] = $joinColumn['onDelete'];
                     }
-                    if (isset($joinColumn['onUpdate'])) {
-                        $newJoinColumns[$joinColumn['name']]['onUpdate'] = $joinColumn['onUpdate'];
-                    }
                 }
                 $oneToOneMappingArray = array(
                     'mappedBy'      => $associationMapping['mappedBy'],
@@ -166,13 +172,7 @@ class YamlExporter extends AbstractExporter
                 );
 
                 $associationMappingArray = array_merge($associationMappingArray, $oneToOneMappingArray);
-
-                if ($associationMapping['type'] & ClassMetadataInfo::ONE_TO_ONE) {
-                    $array['oneToOne'][$name] = $associationMappingArray;
-                } else {
-                    $array['manyToOne'][$name] = $associationMappingArray;
-                }
-
+                $array['oneToOne'][$name] = $associationMappingArray;
             } else if ($associationMapping['type'] == ClassMetadataInfo::ONE_TO_MANY) {
                 $oneToManyMappingArray = array(
                     'mappedBy'      => $associationMapping['mappedBy'],

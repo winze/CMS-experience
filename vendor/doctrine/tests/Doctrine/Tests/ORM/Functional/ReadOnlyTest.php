@@ -30,14 +30,14 @@ class ReadOnlyTest extends \Doctrine\Tests\OrmFunctionalTestCase
         $this->_em->flush();
 
         $readOnly->name = "Test2";
-        $readOnly->number = 4321;
+        $readOnly->numericValue = 4321;
 
         $this->_em->flush();
         $this->_em->clear();
 
         $dbReadOnly = $this->_em->find('Doctrine\Tests\ORM\Functional\ReadOnlyEntity', $readOnly->id);
         $this->assertEquals("Test1", $dbReadOnly->name);
-        $this->assertEquals(1234, $dbReadOnly->number);
+        $this->assertEquals(1234, $dbReadOnly->numericValue);
     }
 
     /**
@@ -51,6 +51,21 @@ class ReadOnlyTest extends \Doctrine\Tests\OrmFunctionalTestCase
         $this->_em->getUnitOfWork()->markReadOnly($readOnly);
 
         $this->_em->clear();
+
+        $this->assertFalse($this->_em->getUnitOfWork()->isReadOnly($readOnly));
+    }
+
+    /**
+     * @group DDC-1659
+     */
+    public function testClearEntitiesReadOnly()
+    {
+        $readOnly = new ReadOnlyEntity("Test1", 1234);
+        $this->_em->persist($readOnly);
+        $this->_em->flush();
+        $this->_em->getUnitOfWork()->markReadOnly($readOnly);
+
+        $this->_em->clear(get_class($readOnly));
 
         $this->assertFalse($this->_em->getUnitOfWork()->isReadOnly($readOnly));
     }
@@ -68,12 +83,12 @@ class ReadOnlyEntity
     public $id;
     /** @column(type="string") */
     public $name;
-    /** @Column(type="integer", name="number_col") */
-    public $number;
+    /** @Column(type="integer") */
+    public $numericValue;
 
     public function __construct($name, $number)
     {
         $this->name = $name;
-        $this->number = $number;
+        $this->numericValue = $number;
     }
 }

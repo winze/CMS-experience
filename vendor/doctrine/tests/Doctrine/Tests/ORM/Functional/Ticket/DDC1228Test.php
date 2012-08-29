@@ -29,7 +29,6 @@ class DDC1228Test extends \Doctrine\Tests\OrmFunctionalTestCase
     public function testOneToOnePersist()
     {
         $user = new DDC1228User;
-        $user->name = "Foo";
         $profile = new DDC1228Profile();
         $profile->name = "Foo";
         $user->profile = $profile;
@@ -58,7 +57,6 @@ class DDC1228Test extends \Doctrine\Tests\OrmFunctionalTestCase
     public function testRefresh()
     {
         $user = new DDC1228User;
-        $user->name = "Foo";
         $profile = new DDC1228Profile();
         $profile->name = "Foo";
         $user->profile = $profile;
@@ -92,10 +90,10 @@ class DDC1228User
     public $id;
 
     /**
-     * @column(type="string")
+     * @Column(type="string")
      * @var string
      */
-    public $name = '';
+    public $name = 'Bar';
 
     /**
      * @OneToOne(targetEntity="DDC1228Profile")

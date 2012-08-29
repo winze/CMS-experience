@@ -61,6 +61,8 @@
   'TwigBundle:Exception:exception.xml.twig' => '/var/www/rd/vj/vendor/symfony/src/Symfony/Bundle/TwigBundle/Resources/views/Exception/exception.xml.twig',
   'SwiftmailerBundle:Collector:swiftmailer.html.twig' => '/var/www/rd/vj/vendor/symfony/src/Symfony/Bundle/SwiftmailerBundle/Resources/views/Collector/swiftmailer.html.twig',
   'DoctrineBundle:Collector:db.html.twig' => '/var/www/rd/vj/vendor/symfony/src/Symfony/Bundle/DoctrineBundle/Resources/views/Collector/db.html.twig',
+  'DoctrineMongoDBBundle:Collector:mongodb.html.twig' => '/var/www/rd/vj/vendor/bundles/Symfony/Bundle/DoctrineMongoDBBundle/Resources/views/Collector/mongodb.html.twig',
+  'WinzePageBuilderBundle:Default:index.html.twig' => '/var/www/rd/vj/src/Winze/PageBuilderBundle/Resources/views/Default/index.html.twig',
   'AcmeDemoBundle::layout.html.twig' => '/var/www/rd/vj/src/Acme/DemoBundle/Resources/views/layout.html.twig',
   'AcmeDemoBundle:Welcome:index.html.twig' => '/var/www/rd/vj/src/Acme/DemoBundle/Resources/views/Welcome/index.html.twig',
   'AcmeDemoBundle:Secured:hello.html.twig' => '/var/www/rd/vj/src/Acme/DemoBundle/Resources/views/Secured/hello.html.twig',

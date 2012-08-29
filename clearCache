@@ -1,0 +1,7 @@
+# bin/bash
+
+cd /var/www/rd/vj
+php app/console cache:clear
+chmod -R 777 /var/www/rd/vj/app/cache
+chmod -R 777 /var/www/rd/vj/app/logs
+echo "Cache supprimé"

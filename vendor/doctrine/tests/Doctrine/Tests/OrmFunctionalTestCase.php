@@ -38,12 +38,19 @@ abstract class OrmFunctionalTestCase extends OrmTestCase
     /** Whether the database schema has already been created. */
     protected static $_tablesCreated = array();
 
+    /**
+     * Array of entity class name to their tables that were created.
+     * @var array
+     */
+    protected static $_entityTablesCreated = array();
+
     /** List of model sets and their classes. */
     protected static $_modelSets = array(
         'cms' => array(
             'Doctrine\Tests\Models\CMS\CmsUser',
             'Doctrine\Tests\Models\CMS\CmsPhonenumber',
             'Doctrine\Tests\Models\CMS\CmsAddress',
+            'Doctrine\Tests\Models\CMS\CmsEmail',
             'Doctrine\Tests\Models\CMS\CmsGroup',
             'Doctrine\Tests\Models\CMS\CmsArticle',
             'Doctrine\Tests\Models\CMS\CmsComment',
@@ -111,6 +118,11 @@ abstract class OrmFunctionalTestCase extends OrmTestCase
             'Doctrine\Tests\Models\Legacy\LegacyArticle',
             'Doctrine\Tests\Models\Legacy\LegacyCar',
         ),
+        'customtype' => array(
+            'Doctrine\Tests\Models\CustomType\CustomTypeChild',
+            'Doctrine\Tests\Models\CustomType\CustomTypeParent',
+            'Doctrine\Tests\Models\CustomType\CustomTypeUpperCase',
+        ),
     );
 
     protected function useModelSet($setName)
@@ -152,6 +164,7 @@ abstract class OrmFunctionalTestCase extends OrmTestCase
 
         if (isset($this->_usedModelSets['company'])) {
             $conn->executeUpdate('DELETE FROM company_contract_employees');
+            $conn->executeUpdate('DELETE FROM company_contract_managers');
             $conn->executeUpdate('DELETE FROM company_contracts');
             $conn->executeUpdate('DELETE FROM company_persons_friends');
             $conn->executeUpdate('DELETE FROM company_managers');
@@ -218,7 +231,33 @@ abstract class OrmFunctionalTestCase extends OrmTestCase
             $conn->executeUpdate('DELETE FROM legacy_users');
         }
 
+        if (isset($this->_usedModelSets['customtype'])) {
+            $conn->executeUpdate('DELETE FROM customtype_parent_friends');
+            $conn->executeUpdate('DELETE FROM customtype_parents');
+            $conn->executeUpdate('DELETE FROM customtype_children');
+            $conn->executeUpdate('DELETE FROM customtype_uppercases');
+        }
+
         $this->_em->clear();
+    }
+
+    protected function setUpEntitySchema(array $classNames)
+    {
+        if ($this->_em === null) {
+            throw new \RuntimeException("EntityManager not set, you have to call parent::setUp() before invoking this method.");
+        }
+
+        $classes = array();
+        foreach ($classNames as $className) {
+            if ( ! isset(static::$_entityTablesCreated[$className])) {
+                static::$_entityTablesCreated[$className] = true;
+                $classes[] = $this->_em->getClassMetadata($className);
+            }
+        }
+
+        if ($classes) {
+            $this->_schemaTool->createSchema($classes);
+        }
     }
 
     /**
@@ -281,7 +320,11 @@ abstract class OrmFunctionalTestCase extends OrmTestCase
         // the actual database platform used during execution has effect on some
         // metadata mapping behaviors (like the choice of the ID generation).
         if (is_null(self::$_metadataCacheImpl)) {
-            self::$_metadataCacheImpl = new \Doctrine\Common\Cache\ArrayCache;
+            if (isset($GLOBALS['DOCTRINE_CACHE_IMPL'])) {
+                self::$_metadataCacheImpl = new $GLOBALS['DOCTRINE_CACHE_IMPL'];
+            } else {
+                self::$_metadataCacheImpl = new \Doctrine\Common\Cache\ArrayCache;
+            }
         }
 
         if (is_null(self::$_queryCacheImpl)) {
@@ -317,6 +360,10 @@ abstract class OrmFunctionalTestCase extends OrmTestCase
                 $subscriberInstance = new $subscriberClass();
                 $evm->addEventSubscriber($subscriberInstance);
             }
+        }
+
+        if (isset($GLOBALS['debug_uow_listener'])) {
+            $evm->addEventListener(array('onFlush'), new \Doctrine\ORM\Tools\DebugUnitOfWorkListener());
         }
 
         return \Doctrine\ORM\EntityManager::create($conn, $config);

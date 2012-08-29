@@ -50,7 +50,6 @@ class ManyToManyEventTest extends \Doctrine\Tests\OrmFunctionalTestCase
         $user = new CmsUser();
         $user->username = 'fran6co';
         $user->name = 'Francisco Facioni';
-        $user->status = 'foo';
         $group = new CmsGroup();
         $group->name = "users";
         $user->addGroup($group);

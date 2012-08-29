@@ -42,6 +42,107 @@ class WinzePageBuilderBundleDocumentPageHydrator implements HydratorInterface
             $this->class->reflFields['name']->setValue($document, $return);
             $hydratedData['name'] = $return;
         }
+
+        /** @ReferenceOne */
+        if (isset($data['pagePatern'])) {
+            $reference = $data['pagePatern'];
+            if (isset($this->class->fieldMappings['pagePatern']['simple']) && $this->class->fieldMappings['pagePatern']['simple']) {
+                $className = $this->class->fieldMappings['pagePatern']['targetDocument'];
+                $mongoId = $reference;
+            } else {
+                $className = $this->dm->getClassNameFromDiscriminatorValue($this->class->fieldMappings['pagePatern'], $reference);
+                $mongoId = $reference['$id'];
+            }
+            $targetMetadata = $this->dm->getClassMetadata($className);
+            $id = $targetMetadata->getPHPIdentifierValue($mongoId);
+            $return = $this->dm->getReference($className, $id);
+            $this->class->reflFields['pagePatern']->setValue($document, $return);
+            $hydratedData['pagePatern'] = $return;
+        }
+
+        /** @Many */
+        $mongoData = isset($data['pageChildren']) ? $data['pageChildren'] : null;
+        $return = new \Doctrine\ODM\MongoDB\PersistentCollection(new \Doctrine\Common\Collections\ArrayCollection(), $this->dm, $this->unitOfWork, '$');
+        $return->setHints($hints);
+        $return->setOwner($document, $this->class->fieldMappings['pageChildren']);
+        $return->setInitialized(false);
+        if ($mongoData) {
+            $return->setMongoData($mongoData);
+        }
+        $this->class->reflFields['pageChildren']->setValue($document, $return);
+        $hydratedData['pageChildren'] = $return;
+
+        /** @Field(type="string") */
+        if (isset($data['alias'])) {
+            $value = $data['alias'];
+            $return = (string) $value;
+            $this->class->reflFields['alias']->setValue($document, $return);
+            $hydratedData['alias'] = $return;
+        }
+
+        /** @Field(type="string") */
+        if (isset($data['title'])) {
+            $value = $data['title'];
+            $return = (string) $value;
+            $this->class->reflFields['title']->setValue($document, $return);
+            $hydratedData['title'] = $return;
+        }
+
+        /** @Field(type="string") */
+        if (isset($data['metaData'])) {
+            $value = $data['metaData'];
+            $return = (string) $value;
+            $this->class->reflFields['metaData']->setValue($document, $return);
+            $hydratedData['metaData'] = $return;
+        }
+
+        /** @Field(type="string") */
+        if (isset($data['metaDescription'])) {
+            $value = $data['metaDescription'];
+            $return = (string) $value;
+            $this->class->reflFields['metaDescription']->setValue($document, $return);
+            $hydratedData['metaDescription'] = $return;
+        }
+
+        /** @Field(type="string") */
+        if (isset($data['metaKey'])) {
+            $value = $data['metaKey'];
+            $return = (string) $value;
+            $this->class->reflFields['metaKey']->setValue($document, $return);
+            $hydratedData['metaKey'] = $return;
+        }
+
+        /** @Field(type="boolean") */
+        if (isset($data['isActif'])) {
+            $value = $data['isActif'];
+            $return = (bool) $value;
+            $this->class->reflFields['isActif']->setValue($document, $return);
+            $hydratedData['isActif'] = $return;
+        }
+
+        /** @Field(type="int") */
+        if (isset($data['roalRead'])) {
+            $value = $data['roalRead'];
+            $return = (int) $value;
+            $this->class->reflFields['roalRead']->setValue($document, $return);
+            $hydratedData['roalRead'] = $return;
+        }
+
+        /** @Field(type="date") */
+        if (isset($data['createdAt'])) {
+            $value = $data['createdAt'];
+            if ($value instanceof \MongoDate) { $date = new \DateTime(); $date->setTimestamp($value->sec); $return = $date; } else { $return = new \DateTime($value); }
+            $this->class->reflFields['createdAt']->setValue($document, clone $return);
+            $hydratedData['createdAt'] = $return;
+        }
+
+        /** @Field(type="date") */
+        if (isset($data['updateAt'])) {
+            $value = $data['updateAt'];
+            if ($value instanceof \MongoDate) { $date = new \DateTime(); $date->setTimestamp($value->sec); $return = $date; } else { $return = new \DateTime($value); }
+            $this->class->reflFields['updateAt']->setValue($document, clone $return);
+            $hydratedData['updateAt'] = $return;
+        }
         return $hydratedData;
     }
 }

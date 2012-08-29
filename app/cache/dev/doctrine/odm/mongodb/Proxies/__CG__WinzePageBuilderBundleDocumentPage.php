@@ -44,6 +44,12 @@ class Page extends \Winze\PageBuilderBundle\Document\Page implements \Doctrine\O
     }
 
     
+    public function preUpdated()
+    {
+        $this->__load();
+        return parent::preUpdated();
+    }
+
     public function getId()
     {
         if ($this->__isInitialized__ === false) {
@@ -65,10 +71,142 @@ class Page extends \Winze\PageBuilderBundle\Document\Page implements \Doctrine\O
         return parent::getName();
     }
 
+    public function setPagePatern(\Winze\PageBuilderBundle\Document\Page $pagePatern)
+    {
+        $this->__load();
+        return parent::setPagePatern($pagePatern);
+    }
+
+    public function getPagePatern()
+    {
+        $this->__load();
+        return parent::getPagePatern();
+    }
+
+    public function addPageChildren(\Winze\PageBuilderBundle\Document\Page $pageChildren)
+    {
+        $this->__load();
+        return parent::addPageChildren($pageChildren);
+    }
+
+    public function getPageChildren()
+    {
+        $this->__load();
+        return parent::getPageChildren();
+    }
+
+    public function setAlias($alias)
+    {
+        $this->__load();
+        return parent::setAlias($alias);
+    }
+
+    public function getAlias()
+    {
+        $this->__load();
+        return parent::getAlias();
+    }
+
+    public function setTitle($title)
+    {
+        $this->__load();
+        return parent::setTitle($title);
+    }
+
+    public function getTitle()
+    {
+        $this->__load();
+        return parent::getTitle();
+    }
+
+    public function setMetaData($metaData)
+    {
+        $this->__load();
+        return parent::setMetaData($metaData);
+    }
+
+    public function getMetaData()
+    {
+        $this->__load();
+        return parent::getMetaData();
+    }
+
+    public function setMetaDescription($metaDescription)
+    {
+        $this->__load();
+        return parent::setMetaDescription($metaDescription);
+    }
+
+    public function getMetaDescription()
+    {
+        $this->__load();
+        return parent::getMetaDescription();
+    }
+
+    public function setMetaKey($metaKey)
+    {
+        $this->__load();
+        return parent::setMetaKey($metaKey);
+    }
+
+    public function getMetaKey()
+    {
+        $this->__load();
+        return parent::getMetaKey();
+    }
+
+    public function setIsActif($isActif)
+    {
+        $this->__load();
+        return parent::setIsActif($isActif);
+    }
+
+    public function getIsActif()
+    {
+        $this->__load();
+        return parent::getIsActif();
+    }
+
+    public function setRoalRead($roalRead)
+    {
+        $this->__load();
+        return parent::setRoalRead($roalRead);
+    }
+
+    public function getRoalRead()
+    {
+        $this->__load();
+        return parent::getRoalRead();
+    }
+
+    public function setCreatedAt($createdAt)
+    {
+        $this->__load();
+        return parent::setCreatedAt($createdAt);
+    }
+
+    public function getCreatedAt()
+    {
+        $this->__load();
+        return parent::getCreatedAt();
+    }
+
+    public function setUpdateAt($updateAt)
+    {
+        $this->__load();
+        return parent::setUpdateAt($updateAt);
+    }
+
+    public function getUpdateAt()
+    {
+        $this->__load();
+        return parent::getUpdateAt();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'name');
+        return array('__isInitialized__', 'id', 'name', 'pagePatern', 'pageChildren', 'alias', 'title', 'metaData', 'metaDescription', 'metaKey', 'isActif', 'roalRead', 'createdAt', 'updateAt');
     }
 
     public function __clone()

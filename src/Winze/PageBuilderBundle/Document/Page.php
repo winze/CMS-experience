@@ -94,7 +94,7 @@ class Page {
     }
     
     /**
-     * @MongoDBPreUpdate 
+     * @MongoDB\PreUpdate 
      */
     public function preUpdated() {
         $this->updateAt = new \DateTime();

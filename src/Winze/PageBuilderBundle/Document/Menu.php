@@ -85,7 +85,7 @@ class Menu {
     }
 
     /**
-     * @MongoDBPreUpdate 
+     * @MongoDB\PreUpdate 
      */
     public function preUpdated() {
         $this->updateAt = new \DateTime();

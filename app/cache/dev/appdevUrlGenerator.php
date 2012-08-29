@@ -34,6 +34,7 @@ class appdevUrlGenerator extends Symfony\Component\Routing\Generator\UrlGenerato
        '_configurator_step' => true,
        '_configurator_final' => true,
        'winze_pagebuilder_default_createpage' => true,
+       'winze_pagebuilder_default_openpage' => true,
     );
 
     /**
@@ -160,5 +161,10 @@ class appdevUrlGenerator extends Symfony\Component\Routing\Generator\UrlGenerato
     private function getwinze_pagebuilder_default_createpageRouteInfo()
     {
         return array(array (  0 => 'name',), array (  '_controller' => 'Winze\\PageBuilderBundle\\Controller\\DefaultController::createPageAction',), array (), array (  0 =>   array (    0 => 'variable',    1 => '/',    2 => '[^/]+?',    3 => 'name',  ),  1 =>   array (    0 => 'text',    1 => '/create/page',  ),));
+    }
+
+    private function getwinze_pagebuilder_default_openpageRouteInfo()
+    {
+        return array(array (  0 => 'name',), array (  '_controller' => 'Winze\\PageBuilderBundle\\Controller\\DefaultController::openPageAction',), array (), array (  0 =>   array (    0 => 'variable',    1 => '/',    2 => '[^/]+?',    3 => 'name',  ),  1 =>   array (    0 => 'text',    1 => '/open/page',  ),));
     }
 }

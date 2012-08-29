@@ -148,6 +148,11 @@ class appdevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             return array_merge($this->mergeDefaults($matches, array (  '_controller' => 'Winze\\PageBuilderBundle\\Controller\\DefaultController::createPageAction',)), array('_route' => 'winze_pagebuilder_default_createpage'));
         }
 
+        // winze_pagebuilder_default_openpage
+        if (0 === strpos($pathinfo, '/open/page') && preg_match('#^/open/page/(?P<name>[^/]+?)$#s', $pathinfo, $matches)) {
+            return array_merge($this->mergeDefaults($matches, array (  '_controller' => 'Winze\\PageBuilderBundle\\Controller\\DefaultController::openPageAction',)), array('_route' => 'winze_pagebuilder_default_openpage'));
+        }
+
         throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();
     }
 }

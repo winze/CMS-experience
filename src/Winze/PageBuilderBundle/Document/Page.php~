@@ -3,6 +3,7 @@
 namespace Winze\PageBuilderBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+
 /**
  * Description of Page
  *
@@ -10,13 +11,80 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  * @MongoDB\Document
  */
 class Page {
+
     /**
      * @MongoDB\Id
      */
     protected $id;
 
     /**
+     * Nom de la page pour l'administrateur
      * @MongoDB\String
      */
     protected $name;
+
+    /**
+     * @MongoDB\ReferenceOne(
+     *     targetDocument="Winze\PageBuilderBundle\Document\Page"
+     * )
+     */
+    protected $pagePatern;
+
+    /**
+     * @MongoDB\ReferenceMany(
+     *     targetDocument="Winze\PageBuilderBundle\Document\Page"
+     * )
+     */
+    protected $pageChildren;
+
+    /**
+     * Alias de la page pour l'url rewriting
+     * par défault l'alias sera un url_encode {titles_parent}/{title}
+     * @MongoDB\String
+     */
+    protected $alias;
+
+    /**
+     * Titre de la page afficher dans le <title>
+     * @MongoDB\String
+     */
+    protected $title;
+
+    /**
+     * @MongoDB\String
+     */
+    protected $metaData;
+
+    /**
+     * @MongoDB\String
+     */
+    protected $metaDescription;
+
+    /**
+     * @MongoDB\String
+     */
+    protected $metaKey;
+
+    /**
+     * @MongoDB\Boolean
+     */
+    protected $isActif;
+
+    /**
+     * Le rôle minimal pour accéder à la page
+     * par défault All user
+     * @MongoDB\Int
+     */
+    protected $roalRead;
+
+    /**
+     * @MongoDB\Date
+     */
+    protected $createdAt;
+
+    /**
+     * @MongoDB\Date
+     */
+    protected $updateAt;
+
 }

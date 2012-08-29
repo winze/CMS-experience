@@ -10,7 +10,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  * @author Vincent
  * @MongoDB\Document
  */
-class Page {
+class Menu {
 
     /**
      * @MongoDB\Id
@@ -24,46 +24,38 @@ class Page {
     protected $name;
 
     /**
-     * @MongoDB\ReferenceOne(
-     *     targetDocument="Winze\PageBuilderBundle\Document\Page"
-     * )
-     */
-    protected $pagePatern;
-
-    /**
-     * @MongoDB\ReferenceMany(
-     *     targetDocument="Winze\PageBuilderBundle\Document\Page"
-     * )
-     */
-    protected $pageChildren;
-
-    /**
-     * Alias de la page pour l'url rewriting
-     * par défault l'alias sera un url_encode {titles_parent}/{title}
-     * @MongoDB\String
-     */
-    protected $alias;
-
-    /**
-     * Titre de la page afficher dans le <title>
+     * Title affiche dans le menu à l'utilisateur
      * @MongoDB\String
      */
     protected $title;
 
     /**
-     * @MongoDB\String
+     * @MongoDB\Int
      */
-    protected $metaData;
+    protected $position = 1;
 
     /**
-     * @MongoDB\String
+     * @MongoDB\ReferenceOne(
+     *     targetDocument="Winze\PageBuilderBundle\Document\Menu",
+     *     cascade="all"
+     * )
      */
-    protected $metaDescription;
+    protected $menuPatern;
 
     /**
-     * @MongoDB\String
+     * @MongoDB\ReferenceMany(
+     *     targetDocument="Winze\PageBuilderBundle\Document\Menu",
+     *     cascade="all"
+     * )
      */
-    protected $metaKey;
+    protected $menuChildren;
+
+    /**
+     * @MongoDB\ReferenceOne(
+     *     targetDocument="Winze\PageBuilderBundle\Document\Page"
+     * )
+     */
+    protected $page;
 
     /**
      * @MongoDB\Boolean
@@ -87,12 +79,11 @@ class Page {
      */
     protected $updateAt;
 
-
     public function __construct() {
-        $this->pageChildren = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->menuChildren = new \Doctrine\Common\Collections\ArrayCollection();
         $this->createdAt = new \DateTime();
     }
-    
+
     /**
      * @MongoDBPreUpdate 
      */
@@ -113,7 +104,7 @@ class Page {
      * Set name
      *
      * @param string $name
-     * @return Page
+     * @return Menu
      */
     public function setName($name) {
         $this->name = $name;
@@ -130,68 +121,10 @@ class Page {
     }
 
     /**
-     * Set pagePatern
-     *
-     * @param Winze\PageBuilderBundle\Document\Page $pagePatern
-     * @return Page
-     */
-    public function setPagePatern(\Winze\PageBuilderBundle\Document\Page $pagePatern) {
-        $this->pagePatern = $pagePatern;
-        return $this;
-    }
-
-    /**
-     * Get pagePatern
-     *
-     * @return Winze\PageBuilderBundle\Document\Page $pagePatern
-     */
-    public function getPagePatern() {
-        return $this->pagePatern;
-    }
-
-    /**
-     * Add pageChildren
-     *
-     * @param Winze\PageBuilderBundle\Document\Page $pageChildren
-     */
-    public function addPageChildren(\Winze\PageBuilderBundle\Document\Page $pageChildren) {
-        $this->pageChildren[] = $pageChildren;
-    }
-
-    /**
-     * Get pageChildren
-     *
-     * @return Doctrine\Common\Collections\Collection $pageChildren
-     */
-    public function getPageChildren() {
-        return $this->pageChildren;
-    }
-
-    /**
-     * Set alias
-     *
-     * @param string $alias
-     * @return Page
-     */
-    public function setAlias($alias) {
-        $this->alias = $alias;
-        return $this;
-    }
-
-    /**
-     * Get alias
-     *
-     * @return string $alias
-     */
-    public function getAlias() {
-        return $this->alias;
-    }
-
-    /**
      * Set title
      *
      * @param string $title
-     * @return Page
+     * @return Menu
      */
     public function setTitle($title) {
         $this->title = $title;
@@ -208,70 +141,88 @@ class Page {
     }
 
     /**
-     * Set metaData
+     * Set position
      *
-     * @param string $metaData
-     * @return Page
+     * @param int $position
+     * @return Menu
      */
-    public function setMetaData($metaData) {
-        $this->metaData = $metaData;
+    public function setPosition($position) {
+        $this->position = $position;
         return $this;
     }
 
     /**
-     * Get metaData
+     * Get position
      *
-     * @return string $metaData
+     * @return int $position
      */
-    public function getMetaData() {
-        return $this->metaData;
+    public function getPosition() {
+        return $this->position;
     }
 
     /**
-     * Set metaDescription
+     * Set menuPatern
      *
-     * @param string $metaDescription
-     * @return Page
+     * @param Winze\PageBuilderBundle\Document\Menu $menuPatern
+     * @return Menu
      */
-    public function setMetaDescription($metaDescription) {
-        $this->metaDescription = $metaDescription;
+    public function setMenuPatern(\Winze\PageBuilderBundle\Document\Menu $menuPatern) {
+        $this->menuPatern = $menuPatern;
         return $this;
     }
 
     /**
-     * Get metaDescription
+     * Get menuPatern
      *
-     * @return string $metaDescription
+     * @return Winze\PageBuilderBundle\Document\Menu $menuPatern
      */
-    public function getMetaDescription() {
-        return $this->metaDescription;
+    public function getMenuPatern() {
+        return $this->menuPatern;
     }
 
     /**
-     * Set metaKey
+     * Add menuChildren
      *
-     * @param string $metaKey
-     * @return Page
+     * @param Winze\PageBuilderBundle\Document\Menu $menuChildren
      */
-    public function setMetaKey($metaKey) {
-        $this->metaKey = $metaKey;
+    public function addMenuChildren(\Winze\PageBuilderBundle\Document\Menu $menuChildren) {
+        $this->menuChildren[] = $menuChildren;
+    }
+
+    /**
+     * Get menuChildren
+     *
+     * @return Doctrine\Common\Collections\Collection $menuChildren
+     */
+    public function getMenuChildren() {
+        return $this->menuChildren;
+    }
+
+    /**
+     * Set page
+     *
+     * @param Winze\PageBuilderBundle\Document\Page $page
+     * @return Menu
+     */
+    public function setPage(\Winze\PageBuilderBundle\Document\Page $page) {
+        $this->page = $page;
         return $this;
     }
 
     /**
-     * Get metaKey
+     * Get page
      *
-     * @return string $metaKey
+     * @return Winze\PageBuilderBundle\Document\Page $page
      */
-    public function getMetaKey() {
-        return $this->metaKey;
+    public function getPage() {
+        return $this->page;
     }
 
     /**
      * Set isActif
      *
      * @param boolean $isActif
-     * @return Page
+     * @return Menu
      */
     public function setIsActif($isActif) {
         $this->isActif = $isActif;
@@ -291,7 +242,7 @@ class Page {
      * Set roalRead
      *
      * @param int $roalRead
-     * @return Page
+     * @return Menu
      */
     public function setRoalRead($roalRead) {
         $this->roalRead = $roalRead;
@@ -311,7 +262,7 @@ class Page {
      * Set createdAt
      *
      * @param date $createdAt
-     * @return Page
+     * @return Menu
      */
     public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
@@ -331,7 +282,7 @@ class Page {
      * Set updateAt
      *
      * @param date $updateAt
-     * @return Page
+     * @return Menu
      */
     public function setUpdateAt($updateAt) {
         $this->updateAt = $updateAt;

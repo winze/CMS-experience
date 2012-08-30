@@ -1,0 +1,5 @@
+{% extends 'WinzeBackendBundle::layout.html.twig' %}
+{% block content %}
+<h2>Ajouter une Page</h2>
+{% include 'WinzeBackendBundle:Backend:page.form.html.twig' with {'formAction':path('admin_page_add'), 'form':form}%}
+{% endblock %}

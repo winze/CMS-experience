@@ -1,0 +1,33 @@
+/* 
+    Document   : style
+    Created on : 29 août 2012, 16:46:57
+    Author     : Vincent
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+.content{
+    margin-top: 40px;
+    border-color: #252525;
+}
+.line-1{
+    
+}
+.line-2 .line-title{
+    padding-left: 20px;
+}
+.line-3 .line-title{
+    padding-left: 35px;
+}
+.line-4 .line-title{
+    padding-left: 45px;
+}
+.line-5 .line-title{
+    padding-left: 55px;
+}
+.line-6 .line-title{
+    padding-left: 65px;
+}

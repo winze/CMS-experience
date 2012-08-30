@@ -25,65 +25,6 @@ class appdevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
         $allow = array();
         $pathinfo = urldecode($pathinfo);
 
-        // _welcome
-        if (rtrim($pathinfo, '/') === '') {
-            if (substr($pathinfo, -1) !== '/') {
-                return $this->redirect($pathinfo.'/', '_welcome');
-            }
-            return array (  '_controller' => 'Acme\\DemoBundle\\Controller\\WelcomeController::indexAction',  '_route' => '_welcome',);
-        }
-
-        // _demo_login
-        if ($pathinfo === '/demo/secured/login') {
-            return array (  '_controller' => 'Acme\\DemoBundle\\Controller\\SecuredController::loginAction',  '_route' => '_demo_login',);
-        }
-
-        // _security_check
-        if ($pathinfo === '/demo/secured/login_check') {
-            return array (  '_controller' => 'Acme\\DemoBundle\\Controller\\SecuredController::securityCheckAction',  '_route' => '_security_check',);
-        }
-
-        // _demo_logout
-        if ($pathinfo === '/demo/secured/logout') {
-            return array (  '_controller' => 'Acme\\DemoBundle\\Controller\\SecuredController::logoutAction',  '_route' => '_demo_logout',);
-        }
-
-        // acme_demo_secured_hello
-        if ($pathinfo === '/demo/secured/hello') {
-            return array (  'name' => 'World',  '_controller' => 'Acme\\DemoBundle\\Controller\\SecuredController::helloAction',  '_route' => 'acme_demo_secured_hello',);
-        }
-
-        // _demo_secured_hello
-        if (0 === strpos($pathinfo, '/demo/secured/hello') && preg_match('#^/demo/secured/hello/(?P<name>[^/]+?)$#s', $pathinfo, $matches)) {
-            return array_merge($this->mergeDefaults($matches, array (  '_controller' => 'Acme\\DemoBundle\\Controller\\SecuredController::helloAction',)), array('_route' => '_demo_secured_hello'));
-        }
-
-        // _demo_secured_hello_admin
-        if (0 === strpos($pathinfo, '/demo/secured/hello/admin') && preg_match('#^/demo/secured/hello/admin/(?P<name>[^/]+?)$#s', $pathinfo, $matches)) {
-            return array_merge($this->mergeDefaults($matches, array (  '_controller' => 'Acme\\DemoBundle\\Controller\\SecuredController::helloadminAction',)), array('_route' => '_demo_secured_hello_admin'));
-        }
-
-        if (0 === strpos($pathinfo, '/demo')) {
-            // _demo
-            if (rtrim($pathinfo, '/') === '/demo') {
-                if (substr($pathinfo, -1) !== '/') {
-                    return $this->redirect($pathinfo.'/', '_demo');
-                }
-                return array (  '_controller' => 'Acme\\DemoBundle\\Controller\\DemoController::indexAction',  '_route' => '_demo',);
-            }
-
-            // _demo_hello
-            if (0 === strpos($pathinfo, '/demo/hello') && preg_match('#^/demo/hello/(?P<name>[^/]+?)$#s', $pathinfo, $matches)) {
-                return array_merge($this->mergeDefaults($matches, array (  '_controller' => 'Acme\\DemoBundle\\Controller\\DemoController::helloAction',)), array('_route' => '_demo_hello'));
-            }
-
-            // _demo_contact
-            if ($pathinfo === '/demo/contact') {
-                return array (  '_controller' => 'Acme\\DemoBundle\\Controller\\DemoController::contactAction',  '_route' => '_demo_contact',);
-            }
-
-        }
-
         // _wdt
         if (preg_match('#^/_wdt/(?P<token>[^/]+?)$#s', $pathinfo, $matches)) {
             return array_merge($this->mergeDefaults($matches, array (  '_controller' => 'Symfony\\Bundle\\WebProfilerBundle\\Controller\\ProfilerController::toolbarAction',)), array('_route' => '_wdt'));
@@ -141,6 +82,56 @@ class appdevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                 return array (  '_controller' => 'Sensio\\Bundle\\DistributionBundle\\Controller\\ConfiguratorController::finalAction',  '_route' => '_configurator_final',);
             }
 
+        }
+
+        // admin_index
+        if (rtrim($pathinfo, '/') === '/admin') {
+            if (substr($pathinfo, -1) !== '/') {
+                return $this->redirect($pathinfo.'/', 'admin_index');
+            }
+            return array (  '_controller' => 'Winze\\BackendBundle\\Controller\\BackendController::indexAction',  '_route' => 'admin_index',);
+        }
+
+        // admin_page_index
+        if (rtrim($pathinfo, '/') === '/admin/page') {
+            if (substr($pathinfo, -1) !== '/') {
+                return $this->redirect($pathinfo.'/', 'admin_page_index');
+            }
+            return array (  '_controller' => 'Winze\\BackendBundle\\Controller\\BackendController::pageIndexAction',  '_route' => 'admin_page_index',);
+        }
+
+        // admin_page_add
+        if (rtrim($pathinfo, '/') === '/admin/page/add') {
+            if (substr($pathinfo, -1) !== '/') {
+                return $this->redirect($pathinfo.'/', 'admin_page_add');
+            }
+            return array (  '_controller' => 'Winze\\BackendBundle\\Controller\\BackendController::pageAddAction',  '_route' => 'admin_page_add',);
+        }
+
+        // admin_page_add_page
+        if (0 === strpos($pathinfo, '/admin/page') && preg_match('#^/admin/page/(?P<id>[^/]+?)/add/page$#s', $pathinfo, $matches)) {
+            return array_merge($this->mergeDefaults($matches, array (  '_controller' => 'Winze\\BackendBundle\\Controller\\BackendController::pageAddPageAction',)), array('_route' => 'admin_page_add_page'));
+        }
+
+        // admin_menu_index
+        if (rtrim($pathinfo, '/') === '/admin/menu') {
+            if (substr($pathinfo, -1) !== '/') {
+                return $this->redirect($pathinfo.'/', 'admin_menu_index');
+            }
+            return array (  '_controller' => 'Winze\\BackendBundle\\Controller\\BackendController::menuIndexAction',  '_route' => 'admin_menu_index',);
+        }
+
+        // admin_menu_add
+        if (rtrim($pathinfo, '/') === '/admin/menu/add') {
+            if (substr($pathinfo, -1) !== '/') {
+                return $this->redirect($pathinfo.'/', 'admin_menu_add');
+            }
+            return array (  '_controller' => 'Winze\\BackendBundle\\Controller\\BackendController::menuAddAction',  '_route' => 'admin_menu_add',);
+        }
+
+        // admin_menu_add_menu
+        if (0 === strpos($pathinfo, '/admin/menu') && preg_match('#^/admin/menu/(?P<id>[^/]+?)/add/menu$#s', $pathinfo, $matches)) {
+            return array_merge($this->mergeDefaults($matches, array (  '_controller' => 'Winze\\BackendBundle\\Controller\\BackendController::menuAddMenuAction',)), array('_route' => 'admin_menu_add_menu'));
         }
 
         // winze_pagebuilder_default_createpage

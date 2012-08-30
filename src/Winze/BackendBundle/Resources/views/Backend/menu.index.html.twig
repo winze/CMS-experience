@@ -1,0 +1,22 @@
+{% extends 'WinzeBackendBundle::layout.html.twig' %}
+{% block content %}
+<h2>Gestion des Menus</h2>
+{% if app.session.hasFlash('notice') %}
+<div class="alert alert-success">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    {{ app.session.flash('notice') }}
+</div>
+{% endif %}
+{% if app.session.hasFlash('error') %}
+<div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    {{ app.session.flash('error') }}
+</div>
+{% endif %}
+<div class="table-menu">
+    {% include 'WinzeBackendBundle:Backend:menu.list.html.twig' with {'menus': menus} %}
+</div>
+<div class="block-action">
+    <a href="{{ path('admin_menu_add') }}"><i class="icon-plus"></i> Ajouter une menu</a>
+</div>
+{% endblock %}

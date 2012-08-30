@@ -1,0 +1,41 @@
+{%extends '::base.html.twig' %}
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/winzebackend/css/style.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/winzebackend/bootstrap/css/bootstrap.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/winzebackend/jquery-ui/css/ui-lightness/jquery-ui-1.8.20.custom.css') }}">
+{% endblock %}
+{% block body %}
+<div class="container">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <button data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar" type="button">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="nav-collapse collapse">
+                    <ul class="nav">
+                        <li class="">
+                            <a href="{{ path ('admin_index') }}">Home</a>
+                        </li>
+                        <li class="">
+                            <a href="{{ path('admin_page_index') }}">Pages</a>
+                        </li>
+                        <li class="">
+                            <a href="{{ path('admin_menu_index') }}">Menu</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+    {% block content %}{% endblock %}
+    </div>    
+</div>
+{% endblock %}
+{% block javascripts %}
+<script src="{{ asset('bundles/winzebackend/jquery-ui/js/jquery-1.7.2.min.js') }}" type="text/javascript" charset="utf-8"></script>
+<script src="{{ asset('bundles/winzebackend/jquery-ui/js/jquery-ui-1.8.20.custom.min.js') }}" type="text/javascript" charset="utf-8"></script>
+{% endblock %}

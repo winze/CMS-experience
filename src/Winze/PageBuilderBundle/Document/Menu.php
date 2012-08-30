@@ -8,7 +8,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  * Description of Page
  *
  * @author Vincent
- * @MongoDB\Document
+ * @MongoDB\Document(repositoryClass="Winze\PageBuilderBundle\Repository\MenuRepository")
  */
 class Menu {
 
@@ -28,6 +28,7 @@ class Menu {
      * @MongoDB\String
      */
     protected $title;
+    protected $alias;
 
     /**
      * @MongoDB\Int
@@ -89,6 +90,14 @@ class Menu {
      */
     public function preUpdated() {
         $this->updateAt = new \DateTime();
+    }
+
+    public function getAlias() {
+        return $this->alias;
+    }
+
+    public function setAlias($alias) {
+        $this->alias = $alias;
     }
 
     /**
@@ -187,6 +196,7 @@ class Menu {
      */
     public function addMenuChildren(\Winze\PageBuilderBundle\Document\Menu $menuChildren) {
         $this->menuChildren[] = $menuChildren;
+        $menuChildren->setMenuPatern($this);
     }
 
     /**

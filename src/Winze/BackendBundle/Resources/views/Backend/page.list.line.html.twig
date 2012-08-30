@@ -1,0 +1,26 @@
+<tr class="line-{{key}}">
+    <td></td>
+    <td class="line-title">
+        {% if key > 1 %}
+            <i class="icon-chevron-right"></i>
+        {% endif %}
+        {{ page.getName }}
+    </td>
+    <td>
+        {% if page.getIsActif %}
+            <a title="Page visible"><i class="icon-ok"></i></a>
+        {% else %}
+            <a title="Page non visible"><i class="icon-remove"></i></a>
+        {% endif %}
+    </td>
+    <td></td>
+    <td>
+        <a href="{{ path('admin_page_add_page', {'id': page.getId}) }}"><i class="icon-plus"></i> Add Page</a>
+        &nbsp;|&nbsp;<a href="/{{ page.getAlias }}"><i class="icon-eye-open"></i> Visue</a>
+    </td>
+</tr>
+{% if page.getPageChildren|length > 0 %}
+    {% for pageChildren in page.getPageChildren %}
+        {% include 'WinzeBackendBundle:Backend:page.list.line.html.twig' with {'page':pageChildren , 'key' : key + 1} %}
+    {% endfor %}
+{% endif %}

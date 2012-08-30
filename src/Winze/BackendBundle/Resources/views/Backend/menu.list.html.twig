@@ -1,0 +1,22 @@
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th width="15"></th>
+            <th>Name</th>
+            <th>Is Active ?</th>
+            <th>Roal</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tboby>
+        {% if menus|length > 0 %}
+            {% for menu in menus %}
+                {% include 'WinzeBackendBundle:Backend:menu.list.line.html.twig' with {'menu':menu, 'key':1} %}
+            {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="5">Pas de menu créée</td>
+        </tr>
+        {% endif %}
+    </tboby>
+</table>

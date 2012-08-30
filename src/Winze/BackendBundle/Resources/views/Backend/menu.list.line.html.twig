@@ -1,0 +1,25 @@
+<tr class="line-{{key}}">
+    <td></td>
+    <td class="line-title">
+        {% if key > 1 %}
+            <i class="icon-chevron-right"></i>
+        {% endif %}
+        {{ menu.getName }}
+    </td>
+    <td>
+        {% if menu.getIsActif %}
+            <a title="Menu visible"><i class="icon-ok"></i></a>
+        {% else %}
+            <a title="Menu non visible"><i class="icon-remove"></i></a>
+        {% endif %}
+    </td>
+    <td></td>
+    <td>
+        <a href="{{ path('admin_menu_add_menu', {'id': menu.getId}) }}"><i class="icon-plus"></i> Add Menu</a>
+    </td>
+</tr>
+{% if menu.getMenuChildren|length > 0 %}
+    {% for menuChildren in menu.getMenuChildren %}
+        {% include 'WinzeBackendBundle:Backend:menu.list.line.html.twig' with {'menu':menuChildren , 'key' : key + 1} %}
+    {% endfor %}
+{% endif %}

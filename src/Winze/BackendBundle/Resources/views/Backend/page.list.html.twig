@@ -1,0 +1,22 @@
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th width="15"></th>
+            <th>Name</th>
+            <th>Is Active ?</th>
+            <th>Roal</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tboby>
+        {% if pages|length > 0 %}
+            {% for page in pages %}
+                {% include 'WinzeBackendBundle:Backend:page.list.line.html.twig' with {'page':page, 'key':1} %}
+            {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="5">Pas de page créée</td>
+        </tr>
+        {% endif %}
+    </tboby>
+</table>

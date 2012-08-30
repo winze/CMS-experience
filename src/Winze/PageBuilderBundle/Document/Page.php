@@ -8,7 +8,8 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  * Description of Page
  *
  * @author Vincent
- * @MongoDB\Document
+ * @MongoDB\Document(repositoryClass="Winze\PageBuilderBundle\Repository\PageRepository")
+ * 
  */
 class Page {
 
@@ -32,7 +33,8 @@ class Page {
 
     /**
      * @MongoDB\ReferenceMany(
-     *     targetDocument="Winze\PageBuilderBundle\Document\Page"
+     *     targetDocument="Winze\PageBuilderBundle\Document\Page",
+     *     cascade="all"
      * )
      */
     protected $pageChildren;
@@ -156,6 +158,7 @@ class Page {
      */
     public function addPageChildren(\Winze\PageBuilderBundle\Document\Page $pageChildren) {
         $this->pageChildren[] = $pageChildren;
+        $pageChildren->setPagePatern($this);
     }
 
     /**

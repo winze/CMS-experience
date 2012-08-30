@@ -13,16 +13,6 @@ use Symfony\Component\Routing\Exception\RouteNotFoundException;
 class appdevUrlGenerator extends Symfony\Component\Routing\Generator\UrlGenerator
 {
     static private $declaredRouteNames = array(
-       '_welcome' => true,
-       '_demo_login' => true,
-       '_security_check' => true,
-       '_demo_logout' => true,
-       'acme_demo_secured_hello' => true,
-       '_demo_secured_hello' => true,
-       '_demo_secured_hello_admin' => true,
-       '_demo' => true,
-       '_demo_hello' => true,
-       '_demo_contact' => true,
        '_wdt' => true,
        '_profiler_search' => true,
        '_profiler_purge' => true,
@@ -33,6 +23,13 @@ class appdevUrlGenerator extends Symfony\Component\Routing\Generator\UrlGenerato
        '_configurator_home' => true,
        '_configurator_step' => true,
        '_configurator_final' => true,
+       'admin_index' => true,
+       'admin_page_index' => true,
+       'admin_page_add' => true,
+       'admin_page_add_page' => true,
+       'admin_menu_index' => true,
+       'admin_menu_add' => true,
+       'admin_menu_add_menu' => true,
        'winze_pagebuilder_default_createpage' => true,
        'winze_pagebuilder_default_openpage' => true,
     );
@@ -56,56 +53,6 @@ class appdevUrlGenerator extends Symfony\Component\Routing\Generator\UrlGenerato
         list($variables, $defaults, $requirements, $tokens) = $this->{'get'.$escapedName.'RouteInfo'}();
 
         return $this->doGenerate($variables, $defaults, $requirements, $tokens, $parameters, $name, $absolute);
-    }
-
-    private function get_welcomeRouteInfo()
-    {
-        return array(array (), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\WelcomeController::indexAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/',  ),));
-    }
-
-    private function get_demo_loginRouteInfo()
-    {
-        return array(array (), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\SecuredController::loginAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/demo/secured/login',  ),));
-    }
-
-    private function get_security_checkRouteInfo()
-    {
-        return array(array (), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\SecuredController::securityCheckAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/demo/secured/login_check',  ),));
-    }
-
-    private function get_demo_logoutRouteInfo()
-    {
-        return array(array (), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\SecuredController::logoutAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/demo/secured/logout',  ),));
-    }
-
-    private function getacme_demo_secured_helloRouteInfo()
-    {
-        return array(array (), array (  'name' => 'World',  '_controller' => 'Acme\\DemoBundle\\Controller\\SecuredController::helloAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/demo/secured/hello',  ),));
-    }
-
-    private function get_demo_secured_helloRouteInfo()
-    {
-        return array(array (  0 => 'name',), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\SecuredController::helloAction',), array (), array (  0 =>   array (    0 => 'variable',    1 => '/',    2 => '[^/]+?',    3 => 'name',  ),  1 =>   array (    0 => 'text',    1 => '/demo/secured/hello',  ),));
-    }
-
-    private function get_demo_secured_hello_adminRouteInfo()
-    {
-        return array(array (  0 => 'name',), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\SecuredController::helloadminAction',), array (), array (  0 =>   array (    0 => 'variable',    1 => '/',    2 => '[^/]+?',    3 => 'name',  ),  1 =>   array (    0 => 'text',    1 => '/demo/secured/hello/admin',  ),));
-    }
-
-    private function get_demoRouteInfo()
-    {
-        return array(array (), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\DemoController::indexAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/demo/',  ),));
-    }
-
-    private function get_demo_helloRouteInfo()
-    {
-        return array(array (  0 => 'name',), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\DemoController::helloAction',), array (), array (  0 =>   array (    0 => 'variable',    1 => '/',    2 => '[^/]+?',    3 => 'name',  ),  1 =>   array (    0 => 'text',    1 => '/demo/hello',  ),));
-    }
-
-    private function get_demo_contactRouteInfo()
-    {
-        return array(array (), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\DemoController::contactAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/demo/contact',  ),));
     }
 
     private function get_wdtRouteInfo()
@@ -156,6 +103,41 @@ class appdevUrlGenerator extends Symfony\Component\Routing\Generator\UrlGenerato
     private function get_configurator_finalRouteInfo()
     {
         return array(array (), array (  '_controller' => 'Sensio\\Bundle\\DistributionBundle\\Controller\\ConfiguratorController::finalAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/_configurator/final',  ),));
+    }
+
+    private function getadmin_indexRouteInfo()
+    {
+        return array(array (), array (  '_controller' => 'Winze\\BackendBundle\\Controller\\BackendController::indexAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/admin/',  ),));
+    }
+
+    private function getadmin_page_indexRouteInfo()
+    {
+        return array(array (), array (  '_controller' => 'Winze\\BackendBundle\\Controller\\BackendController::pageIndexAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/admin/page/',  ),));
+    }
+
+    private function getadmin_page_addRouteInfo()
+    {
+        return array(array (), array (  '_controller' => 'Winze\\BackendBundle\\Controller\\BackendController::pageAddAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/admin/page/add/',  ),));
+    }
+
+    private function getadmin_page_add_pageRouteInfo()
+    {
+        return array(array (  0 => 'id',), array (  '_controller' => 'Winze\\BackendBundle\\Controller\\BackendController::pageAddPageAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/add/page',  ),  1 =>   array (    0 => 'variable',    1 => '/',    2 => '[^/]+?',    3 => 'id',  ),  2 =>   array (    0 => 'text',    1 => '/admin/page',  ),));
+    }
+
+    private function getadmin_menu_indexRouteInfo()
+    {
+        return array(array (), array (  '_controller' => 'Winze\\BackendBundle\\Controller\\BackendController::menuIndexAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/admin/menu/',  ),));
+    }
+
+    private function getadmin_menu_addRouteInfo()
+    {
+        return array(array (), array (  '_controller' => 'Winze\\BackendBundle\\Controller\\BackendController::menuAddAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/admin/menu/add/',  ),));
+    }
+
+    private function getadmin_menu_add_menuRouteInfo()
+    {
+        return array(array (  0 => 'id',), array (  '_controller' => 'Winze\\BackendBundle\\Controller\\BackendController::menuAddMenuAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/add/menu',  ),  1 =>   array (    0 => 'variable',    1 => '/',    2 => '[^/]+?',    3 => 'id',  ),  2 =>   array (    0 => 'text',    1 => '/admin/menu',  ),));
     }
 
     private function getwinze_pagebuilder_default_createpageRouteInfo()

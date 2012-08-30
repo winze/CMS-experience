@@ -1,0 +1,5 @@
+{% extends 'WinzeBackendBundle::layout.html.twig' %}
+{% block content %}
+<h2>Ajouter une sous Menu</h2>
+{% include 'WinzeBackendBundle:Backend:menu.form.html.twig' with {'formAction':path('admin_menu_add_menu', {'id':menuPatern.getId}), 'form':form}%}
+{% endblock %}

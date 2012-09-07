@@ -1,5 +1,6 @@
 {%extends '::base.html.twig' %}
 {% block stylesheets %}
+<base href="http://vj.rd.lan/app_dev.php">
 <link rel="stylesheet" type="text/css" href="{{ asset('bundles/winzebackend/css/style.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('bundles/winzebackend/bootstrap/css/bootstrap.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('bundles/winzebackend/jquery-ui/css/ui-lightness/jquery-ui-1.8.20.custom.css') }}">
@@ -36,6 +37,9 @@
 </div>
 {% endblock %}
 {% block javascripts %}
-<script src="{{ asset('bundles/winzebackend/jquery-ui/js/jquery-1.7.2.min.js') }}" type="text/javascript" charset="utf-8"></script>
-<script src="{{ asset('bundles/winzebackend/jquery-ui/js/jquery-ui-1.8.20.custom.min.js') }}" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ asset('bundles/winzebackend/jquery-ui/js/jquery-1.7.2.min.js') }}" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ asset('bundles/winzebackend/bootstrap/js/bootstrap.min.js') }}" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ asset('bundles/winzebackend/jquery-ui/js/jquery-ui-1.8.20.custom.min.js') }}" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ asset('bundles/winzebackend/js/backend.js') }}" type="text/javascript" charset="utf-8"></script>
+    {% block javascripts_spec %}{% endblock %}
 {% endblock %}

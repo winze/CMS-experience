@@ -15,8 +15,17 @@ class MenuRepository extends DocumentRepository {
     public function findAllPartern() {
         return $this->dm->createQueryBuilder('WinzePageBuilderBundle:Menu')
                         ->field('menuPatern')->equals(null)
+                        ->sort('position', 'asc')
                         ->getQuery()
                         ->execute();
     }
-
+    
+    public function findAllParternActif() {
+        return $this->dm->createQueryBuilder('WinzePageBuilderBundle:Menu')
+                        ->field('menuPatern')->equals(null)
+                        ->field('isActif')->equals(true)
+                        ->sort('position', 'asc')
+                        ->getQuery()
+                        ->execute();
+    }
 }

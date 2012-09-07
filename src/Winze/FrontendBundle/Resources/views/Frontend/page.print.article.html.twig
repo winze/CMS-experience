@@ -1,0 +1,19 @@
+{% if locale == 'en' %}
+    {{ article.getTitleEn }}
+    {% if article.getPicture %}
+        <img src="{{ article.getPicture.getSrc }}" class="article-picture"/>
+    {% endif %}
+    {{ article.getBodyEn }}
+    {% if article.getDiaporama %}
+        {%include 'WinzeFrontendBundle:Frontend:article.diaporama.html.twig' with {'diaporama':article.getDiaporama}%}
+    {% endif %}
+{% elseif locale == 'fr' %}
+    {{ article.getTitle }}
+    {% if article.getPicture %}
+        <img src="{{ article.getPicture.getSrc }}" class="article-picture"/>
+    {% endif %}
+    {{ article.getBody }}
+    {% if article.getDiaporama %}
+        {%include 'WinzeFrontendBundle:Frontend:article.diaporama.html.twig' with {'diaporama':article.getDiaporama}%}
+    {% endif %}
+{% endif %}

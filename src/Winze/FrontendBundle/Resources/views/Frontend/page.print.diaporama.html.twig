@@ -1,0 +1,14 @@
+{% if locale == 'en' %}
+    {{ diaporama.getTitleEn }}
+{% elseif locale == 'fr' %}
+    {{ diaporama.getTitle }}
+{% endif %}
+{% if diaporama.getDiaporamaPictures|length > 0%}
+<ul class="diaporama">
+    {% for dp in diaporama.getDiaporamaPictures %}
+        {% if dp.getIsActif%}
+        <li><img src="{{ dp.getPicture.getSrc}}" class="diaporama-picture" width="128"/></li>
+        {% endif %}
+    {% endfor %}
+</ul>
+{% endif %}

@@ -81,11 +81,27 @@ class WinzePageBuilderBundleDocumentPageHydrator implements HydratorInterface
         }
 
         /** @Field(type="string") */
+        if (isset($data['aliasEn'])) {
+            $value = $data['aliasEn'];
+            $return = (string) $value;
+            $this->class->reflFields['aliasEn']->setValue($document, $return);
+            $hydratedData['aliasEn'] = $return;
+        }
+
+        /** @Field(type="string") */
         if (isset($data['title'])) {
             $value = $data['title'];
             $return = (string) $value;
             $this->class->reflFields['title']->setValue($document, $return);
             $hydratedData['title'] = $return;
+        }
+
+        /** @Field(type="string") */
+        if (isset($data['titleEn'])) {
+            $value = $data['titleEn'];
+            $return = (string) $value;
+            $this->class->reflFields['titleEn']->setValue($document, $return);
+            $hydratedData['titleEn'] = $return;
         }
 
         /** @Field(type="string") */
@@ -97,11 +113,27 @@ class WinzePageBuilderBundleDocumentPageHydrator implements HydratorInterface
         }
 
         /** @Field(type="string") */
+        if (isset($data['metaDataEn'])) {
+            $value = $data['metaDataEn'];
+            $return = (string) $value;
+            $this->class->reflFields['metaDataEn']->setValue($document, $return);
+            $hydratedData['metaDataEn'] = $return;
+        }
+
+        /** @Field(type="string") */
         if (isset($data['metaDescription'])) {
             $value = $data['metaDescription'];
             $return = (string) $value;
             $this->class->reflFields['metaDescription']->setValue($document, $return);
             $hydratedData['metaDescription'] = $return;
+        }
+
+        /** @Field(type="string") */
+        if (isset($data['metaDescriptionEn'])) {
+            $value = $data['metaDescriptionEn'];
+            $return = (string) $value;
+            $this->class->reflFields['metaDescriptionEn']->setValue($document, $return);
+            $hydratedData['metaDescriptionEn'] = $return;
         }
 
         /** @Field(type="string") */
@@ -111,6 +143,26 @@ class WinzePageBuilderBundleDocumentPageHydrator implements HydratorInterface
             $this->class->reflFields['metaKey']->setValue($document, $return);
             $hydratedData['metaKey'] = $return;
         }
+
+        /** @Field(type="string") */
+        if (isset($data['metaKeyEn'])) {
+            $value = $data['metaKeyEn'];
+            $return = (string) $value;
+            $this->class->reflFields['metaKeyEn']->setValue($document, $return);
+            $hydratedData['metaKeyEn'] = $return;
+        }
+
+        /** @Many */
+        $mongoData = isset($data['contenus']) ? $data['contenus'] : null;
+        $return = new \Doctrine\ODM\MongoDB\PersistentCollection(new \Doctrine\Common\Collections\ArrayCollection(), $this->dm, $this->unitOfWork, '$');
+        $return->setHints($hints);
+        $return->setOwner($document, $this->class->fieldMappings['contenus']);
+        $return->setInitialized(false);
+        if ($mongoData) {
+            $return->setMongoData($mongoData);
+        }
+        $this->class->reflFields['contenus']->setValue($document, $return);
+        $hydratedData['contenus'] = $return;
 
         /** @Field(type="boolean") */
         if (isset($data['isActif'])) {

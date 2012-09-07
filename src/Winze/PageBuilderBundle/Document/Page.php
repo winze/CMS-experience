@@ -41,16 +41,29 @@ class Page {
 
     /**
      * Alias de la page pour l'url rewriting
-     * par défault l'alias sera un url_encode {titles_parent}/{title}
+     * par défault l'alias sera un urlEncode {titles_parent}/{title}
      * @MongoDB\String
      */
     protected $alias;
+
+    /**
+     * Alias de la page pour l'url rewriting
+     * par défault l'alias sera un urlEncode {titles_parent}/{title}
+     * @MongoDB\String
+     */
+    protected $aliasEn;
 
     /**
      * Titre de la page afficher dans le <title>
      * @MongoDB\String
      */
     protected $title;
+
+    /**
+     * Titre de la page afficher dans le <title>
+     * @MongoDB\String
+     */
+    protected $titleEn;
 
     /**
      * @MongoDB\String
@@ -60,12 +73,36 @@ class Page {
     /**
      * @MongoDB\String
      */
+    protected $metaDataEn;
+
+    /**
+     * @MongoDB\String
+     */
     protected $metaDescription;
 
     /**
      * @MongoDB\String
      */
+    protected $metaDescriptionEn;
+
+    /**
+     * @MongoDB\String
+     */
     protected $metaKey;
+
+    /**
+     * @MongoDB\String
+     */
+    protected $metaKeyEn;
+
+    /**
+     * @MongoDB\ReferenceMany(
+     *     targetDocument="Winze\PageBuilderBundle\Document\Contenu",
+     *     cascade="all",
+     *     sort={"position"=-1}
+     * )
+     */
+    protected $contenus;
 
     /**
      * @MongoDB\Boolean
@@ -89,17 +126,126 @@ class Page {
      */
     protected $updateAt;
 
-
     public function __construct() {
         $this->pageChildren = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->contenus = new \Doctrine\Common\Collections\ArrayCollection();
         $this->createdAt = new \DateTime();
     }
-    
+
     /**
      * @MongoDB\PreUpdate 
      */
     public function preUpdated() {
         $this->updateAt = new \DateTime();
+    }
+
+    /**
+     * Fontion qui permet de savoir si le contenu est associé à la page
+     * @param string $id
+     * @return boolean
+     */
+    public function contenuExists($id) {
+        if (count($this->getContenus()) > 0) {
+            foreach ($this->getContenus() as $key => $contenu) {
+                if ($contenu->getId() == $id) {
+                    return $key;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Fonction de suppression d'un contenu d'un page
+     * @param string $id Id du contenu à supprimer
+     * @return boolean/Winze\PageBuilderBundle\Document\Contenu Retourn false si les contenu n'est pas associé
+     *                      à la page sinon retourne l'objet contenu
+     */
+    public function removeContenu($id) {
+        $key = $this->contenuExists($id);
+        if ($key === false) {
+            return false;
+        }
+
+        $contenu = $this->contenus[$key];
+        unset($this->contenus[$key]);
+        return $contenu;
+    }
+
+    public function pageChildrenExist($id) {
+        if (count($this->getPageChildren()) > 0) {
+            foreach ($this->getPageChildren() as $key => $page) {
+                if ($page->getId() == $id) {
+                    return $key;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Fonction de suppression d'un contenu d'un page
+     * @param string $id Id du contenu à supprimer
+     * @return boolean/Winze\PageBuilderBundle\Document\Contenu Retourn false si les contenu n'est pas associé
+     *                      à la page sinon retourne l'objet contenu
+     */
+    public function removePageChildren($id) {
+        $key = $this->pageChildrenExist($id);
+        if ($key === false) {
+            return false;
+        }
+
+        $page = $this->pageChildren[$key];
+        unset($this->pageChildren[$key]);
+        return $page;
+    }
+
+    /*----------------------------
+     * GETTER & SETTER
+     */
+    public function getAliasEn() {
+        return $this->aliasEn;
+    }
+
+    public function setAliasEn($aliasEn) {
+        $this->aliasEn = $aliasEn;
+        return $this;
+    }
+
+    public function getTitleEn() {
+        return $this->titleEn;
+    }
+
+    public function setTitleEn($titleEn) {
+        $this->titleEn = $titleEn;
+        return $this;
+    }
+
+    public function getMetaDataEn() {
+        return $this->metaDataEn;
+    }
+
+    public function setMetaDataEn($metaDataEn) {
+        $this->metaDataEn = $metaDataEn;
+        return $this;
+    }
+
+    public function getMetaDescriptionEn() {
+        return $this->metaDescriptionEn;
+    }
+
+    public function setMetaDescriptionEn($metaDescriptionEn) {
+        $this->metaDescriptionEn = $metaDescriptionEn;
+        return $this;
+    }
+
+    public function getMetaKeyEn() {
+        return $this->metaKeyEn;
+    }
+
+    public function setMetaKeyEn($metaKeyEn) {
+        $this->metaKeyEn = $metaKeyEn;
+        return $this;
     }
 
     /**
@@ -268,6 +414,25 @@ class Page {
      */
     public function getMetaKey() {
         return $this->metaKey;
+    }
+
+    /**
+     * Add contenus
+     *
+     * @param Winze\PageBuilderBundle\Document\Contenu $contenus
+     */
+    public function addContenus(\Winze\PageBuilderBundle\Document\Contenu $contenus) {
+        $this->contenus[] = $contenus;
+        $contenus->setPage($this);
+    }
+
+    /**
+     * Get contenus
+     *
+     * @return Doctrine\Common\Collections\Collection $contenus
+     */
+    public function getContenus() {
+        return $this->contenus;
     }
 
     /**

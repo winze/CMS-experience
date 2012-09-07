@@ -1,0 +1,43 @@
+{% extends 'WinzeBackendBundle::layout.html.twig' %}
+{% block content %}
+<ul class="breadcrumb">
+    <li><a href="{{ path('admin_index')}}">Accueil</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('admin_page_index')}}">Pages</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('admin_page_edit', {'id':page.getId})}}">Contenu</a> <span class="divider">/</span></li>
+    <li class="active">Article</li>
+</ul>
+<h2>Modification de l'article : {{ article.getTitle }}</h2>
+{% if app.session.hasFlash('notice') %}
+<div class="alert alert-success">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    {{ app.session.flash('notice') }}
+</div>
+{% endif %}
+{% if app.session.hasFlash('error') %}
+<div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    {{ app.session.flash('error') }}
+</div>
+{% endif %}
+<div class="tabbable">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab1" data-toggle="tab">Editer article</a></li>
+        <li><a href="#tab2" data-toggle="tab">Diaporama</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab1">
+            {% include 'WinzeBackendBundle:Backend:article.form.html.twig' with {'form':form, 'formAction':path('admin_article_edit',{'idPage':page.getId, 'idArticle':article.getId}), 'article':article} %}
+        </div>
+        <div class="tab-pane" id="tab2">
+            {% if article.getDiaporama %}
+                {% include 'WinzeBackendBundle:Backend:article.diaporama.edit.html.twig' with {'diaporama': article.getDiaporama,'article':article, 'page':page} %}
+            {% else %}
+                Pas de Diaporama
+                <div class="block-action">
+                    <a href="{{ path('admin_page_contenu_article_add_diaporama', {'idPage':page.getId, 'idArticle':article.getId}) }}"><i class="icon-plus"></i> Ajouter un diaporama</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

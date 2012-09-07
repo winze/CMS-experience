@@ -1,5 +1,5 @@
-<tr class="line-{{key}}">
-    <td></td>
+<tr class="line-{{key}}" id="{{ menu.getId}}">
+    <td><i class="icon-move"></i></td>
     <td class="line-title">
         {% if key > 1 %}
             <i class="icon-chevron-right"></i>
@@ -7,15 +7,25 @@
         {{ menu.getName }}
     </td>
     <td>
+        <a href="{{ path('admin_page_edit', {'id': menu.getPage.getId}) }}">{{menu.getPage.getName}}</a>
+        <blockquote>
+            <small>URL : {{menu.getPage.getAlias}}.</small>
+        </blockquote>
+    </td>
+    <td class="btn-actif">
         {% if menu.getIsActif %}
-            <a title="Menu visible"><i class="icon-ok"></i></a>
+            <a title="Visible" class="btn-activated js_activated" data-id="{{ menu.getId}}" data-link="{{ path('admin_menu_activated_ajax') }}">
+                <span class="badge badge-success"><i class="icon-ok icon-white"></i></span>
+            </a>
         {% else %}
-            <a title="Menu non visible"><i class="icon-remove"></i></a>
+            <a title="Non visible" class="btn-activated js_activated" data-id="{{ menu.getId}}" data-link="{{ path('admin_menu_activated_ajax') }}">
+                <span class="badge badge-important"><i class="icon-remove icon-white"></i></span>
+            </a>
         {% endif %}
     </td>
-    <td></td>
     <td>
-        <a href="{{ path('admin_menu_add_menu', {'id': menu.getId}) }}"><i class="icon-plus"></i> Add Menu</a>
+        <a href="{{ path('admin_menu_add_menu', {'id': menu.getId}) }}"><i class="icon-plus"></i> Add sous menu</a>
+        &nbsp;|&nbsp;<a href="{{ path('admin_menu_remove', {'id': menu.getId}) }}"><i class="icon-trash"></i> Supprimer</a>
     </td>
 </tr>
 {% if menu.getMenuChildren|length > 0 %}

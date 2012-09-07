@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\DoctrineMongoDBBundle\DoctrineMongoDBBundle(),
             new Winze\PageBuilderBundle\WinzePageBuilderBundle(),
             new Winze\BackendBundle\WinzeBackendBundle(),
+            new Winze\FrontendBundle\WinzeFrontendBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

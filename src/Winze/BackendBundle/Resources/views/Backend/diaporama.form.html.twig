@@ -1,0 +1,31 @@
+<form action="{{ formAction }}" method="post" class="form-horizontal" {{ form_enctype(form) }}>
+    <fieldset>
+        <div class="control-group">
+            <label for="focusedInput" class="control-label">{{ form_label( form.title ) }}</label>
+            <div class="controls">
+                {{ form_widget(form.title, { 'attr': {'class': 'input-xlarge focused'} })}}
+                {% if form_errors(form.title) %}
+                <div class="alert alert-error">
+                    {{ form_errors(form.title)}}
+                </div>  
+                {% endif %}
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="focusedInput" class="control-label">{{ form_label( form.titleEn ) }}</label>
+            <div class="controls">
+                {{ form_widget(form.titleEn, { 'attr': {'class': 'input-xlarge focused'} })}}
+                {% if form_errors(form.titleEn) %}
+                <div class="alert alert-error">
+                    {{ form_errors(form.titleEn)}}
+                </div>  
+                {% endif %}
+            </div>
+        </div>
+    </fieldset>
+    <div class="form-actions">
+        <button class="btn btn-primary" type="submit">Enregister</button>
+        <button class="btn">Annuler</button>
+    </div>
+    {{ form_rest(form) }}
+</form>

@@ -1,0 +1,41 @@
+<table class="table table-striped table-bordered" id="sortable" data-link="{{ path ('admin_diaporama_picture_update_order_ajax') }}">
+    <thead>
+        <tr>
+            <th width="15"></th>
+            <th>Name</th>
+            <th>Actif ?</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tboby>
+        {% if pictures|length > 0 %}
+            {% for picture in pictures %}
+            <tr id="{{ picture.getId}}">
+                <td><i class="icon-move"></i></td>
+                <td>
+                    <img src="{{ picture.getPicture.getSrc }}" width="126"/>
+                    {{ picture.getPicture.getName }}
+                </td>
+                <td class="btn-actif">
+                    {% if picture.getIsActif %}
+                        <a title="Visible" class="btn-activated js_activated" data-id="{{ picture.getId}}" data-link="{{ path('admin_diaporama_picture_activated_ajax') }}">
+                            <span class="badge badge-success"><i class="icon-ok icon-white"></i></span>
+                        </a>
+                    {% else %}
+                        <a title="Non visible" class="btn-activated js_activated" data-id="{{ picture.getId}}" data-link="{{ path('admin_diaporama_picture_activated_ajax') }}">
+                            <span class="badge badge-important"><i class="icon-remove icon-white"></i></span>
+                        </a>
+                    {% endif %}
+                </td>
+                <td>
+                    <a class="js_diaporama_remove" data-id="{{ picture.getId}}" data-link="{{ path('admin_diaporama_picture_remove_ajax') }}"><i class="icon-trash"></i> Supprimer</a>
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="4">Pas d'image créée</td>
+        </tr>
+        {% endif %}
+    </tboby>
+</table>

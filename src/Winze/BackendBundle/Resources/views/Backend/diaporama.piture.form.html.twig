@@ -1,0 +1,20 @@
+<form action="{{ formAction }}" method="post" class="form-horizontal" {{ form_enctype(form) }}>
+    <fieldset>
+        <div class="control-group">
+            <label for="focusedInput" class="control-label">{{ form_label( form.picture ) }}</label>
+            <div class="controls">
+                {{ form_widget(form.picture, { 'attr': {'class': 'input-xlarge focused'} })}}
+                {% if form_errors(form.picture) %}
+                <div class="alert alert-error">
+                    {{ form_errors(form)}}
+                </div>  
+                {% endif %}
+            </div>
+        </div>
+    </fieldset>
+    <div class="form-actions">
+        <button class="btn btn-primary" type="submit">Enregister</button>
+        <button class="btn">Annuler</button>
+    </div>
+    {{ form_rest(form) }}
+</form>

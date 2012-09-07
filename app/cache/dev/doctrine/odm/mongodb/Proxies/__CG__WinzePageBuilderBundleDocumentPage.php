@@ -50,6 +50,90 @@ class Page extends \Winze\PageBuilderBundle\Document\Page implements \Doctrine\O
         return parent::preUpdated();
     }
 
+    public function contenuExists($id)
+    {
+        $this->__load();
+        return parent::contenuExists($id);
+    }
+
+    public function removeContenu($id)
+    {
+        $this->__load();
+        return parent::removeContenu($id);
+    }
+
+    public function pageChildrenExist($id)
+    {
+        $this->__load();
+        return parent::pageChildrenExist($id);
+    }
+
+    public function removePageChildren($id)
+    {
+        $this->__load();
+        return parent::removePageChildren($id);
+    }
+
+    public function getAliasEn()
+    {
+        $this->__load();
+        return parent::getAliasEn();
+    }
+
+    public function setAliasEn($aliasEn)
+    {
+        $this->__load();
+        return parent::setAliasEn($aliasEn);
+    }
+
+    public function getTitleEn()
+    {
+        $this->__load();
+        return parent::getTitleEn();
+    }
+
+    public function setTitleEn($titleEn)
+    {
+        $this->__load();
+        return parent::setTitleEn($titleEn);
+    }
+
+    public function getMetaDataEn()
+    {
+        $this->__load();
+        return parent::getMetaDataEn();
+    }
+
+    public function setMetaDataEn($metaDataEn)
+    {
+        $this->__load();
+        return parent::setMetaDataEn($metaDataEn);
+    }
+
+    public function getMetaDescriptionEn()
+    {
+        $this->__load();
+        return parent::getMetaDescriptionEn();
+    }
+
+    public function setMetaDescriptionEn($metaDescriptionEn)
+    {
+        $this->__load();
+        return parent::setMetaDescriptionEn($metaDescriptionEn);
+    }
+
+    public function getMetaKeyEn()
+    {
+        $this->__load();
+        return parent::getMetaKeyEn();
+    }
+
+    public function setMetaKeyEn($metaKeyEn)
+    {
+        $this->__load();
+        return parent::setMetaKeyEn($metaKeyEn);
+    }
+
     public function getId()
     {
         if ($this->__isInitialized__ === false) {
@@ -155,6 +239,18 @@ class Page extends \Winze\PageBuilderBundle\Document\Page implements \Doctrine\O
         return parent::getMetaKey();
     }
 
+    public function addContenus(\Winze\PageBuilderBundle\Document\Contenu $contenus)
+    {
+        $this->__load();
+        return parent::addContenus($contenus);
+    }
+
+    public function getContenus()
+    {
+        $this->__load();
+        return parent::getContenus();
+    }
+
     public function setIsActif($isActif)
     {
         $this->__load();
@@ -206,7 +302,7 @@ class Page extends \Winze\PageBuilderBundle\Document\Page implements \Doctrine\O
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'name', 'pagePatern', 'pageChildren', 'alias', 'title', 'metaData', 'metaDescription', 'metaKey', 'isActif', 'roalRead', 'createdAt', 'updateAt');
+        return array('__isInitialized__', 'id', 'name', 'pagePatern', 'pageChildren', 'alias', 'aliasEn', 'title', 'titleEn', 'metaData', 'metaDataEn', 'metaDescription', 'metaDescriptionEn', 'metaKey', 'metaKeyEn', 'contenus', 'isActif', 'roalRead', 'createdAt', 'updateAt');
     }
 
     public function __clone()

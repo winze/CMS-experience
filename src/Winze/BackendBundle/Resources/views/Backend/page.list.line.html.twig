@@ -1,22 +1,27 @@
 <tr class="line-{{key}}">
-    <td></td>
     <td class="line-title">
         {% if key > 1 %}
             <i class="icon-chevron-right"></i>
         {% endif %}
         {{ page.getName }}
     </td>
-    <td>
+    <td>{{page.getAlias}}</td>
+    <td class="btn-actif">
         {% if page.getIsActif %}
-            <a title="Page visible"><i class="icon-ok"></i></a>
+            <a title="Visible" class="btn-activated js_activated" data-id="{{ page.getId}}" data-link="{{ path('admin_page_activated_ajax') }}">
+                <span class="badge badge-success"><i class="icon-ok icon-white"></i></span>
+            </a>
         {% else %}
-            <a title="Page non visible"><i class="icon-remove"></i></a>
+            <a title="Non visible" class="btn-activated js_page_activated" data-id="{{ page.getId}}" data-link="{{ path('admin_page_activated_ajax') }}">
+                <span class="badge badge-important"><i class="icon-remove icon-white"></i></span>
+            </a>
         {% endif %}
     </td>
-    <td></td>
     <td>
-        <a href="{{ path('admin_page_add_page', {'id': page.getId}) }}"><i class="icon-plus"></i> Add Page</a>
+        <a href="{{ path('admin_page_add_page', {'id': page.getId}) }}"><i class="icon-plus"></i> Add sous page</a>
         &nbsp;|&nbsp;<a href="/{{ page.getAlias }}"><i class="icon-eye-open"></i> Visue</a>
+        &nbsp;|&nbsp;<a href="{{ path('admin_page_edit', {'id': page.getId}) }}"><i class="icon-edit"></i> Editer</a>
+        &nbsp;|&nbsp;<a href="{{ path('admin_page_remove', {'id': page.getId}) }}"><i class="icon-trash"></i> Supprimer</a>
     </td>
 </tr>
 {% if page.getPageChildren|length > 0 %}

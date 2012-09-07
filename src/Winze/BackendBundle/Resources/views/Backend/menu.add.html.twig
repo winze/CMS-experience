@@ -1,5 +1,10 @@
 {% extends 'WinzeBackendBundle::layout.html.twig' %}
 {% block content %}
+<ul class="breadcrumb">
+    <li><a href="{{ path('admin_index')}}">Accueil</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('admin_menu_index')}}">Menu</a> <span class="divider">/</span></li>
+    <li class="active">Ajouter menu</li>
+</ul>
 <h2>Ajouter une Menu</h2>
 {% if app.session.hasFlash('error') %}
 <div class="alert alert-error">

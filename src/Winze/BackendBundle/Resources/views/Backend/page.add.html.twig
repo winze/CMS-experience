@@ -1,5 +1,16 @@
 {% extends 'WinzeBackendBundle::layout.html.twig' %}
 {% block content %}
+<ul class="breadcrumb">
+    <li><a href="{{ path('admin_index')}}">Accueil</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('admin_page_index')}}">Page</a> <span class="divider">/</span></li>
+    <li class="active">Ajouter page</li>
+</ul>
 <h2>Ajouter une Page</h2>
+{% if app.session.hasFlash('error') %}
+<div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    {{ app.session.flash('error') }}
+</div>
+{% endif %}
 {% include 'WinzeBackendBundle:Backend:page.form.html.twig' with {'formAction':path('admin_page_add'), 'form':form}%}
 {% endblock %}

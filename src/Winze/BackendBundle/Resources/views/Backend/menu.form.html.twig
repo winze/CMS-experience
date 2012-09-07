@@ -25,6 +25,17 @@
             </div>
         </div>
         <div class="control-group">
+            <label for="focusedInput" class="control-label">{{ form_label( form.titleEn ) }}</label>
+            <div class="controls">
+                {{ form_widget(form.titleEn, { 'attr': {'class': 'input-xlarge focused'} })}}
+                {% if form_errors(form.titleEn) %}
+                <div class="alert alert-error">
+                    {{ form_errors(form.titleEn)}}
+                </div>  
+                {% endif %}
+            </div>
+        </div>
+        <div class="control-group">
             <label for="focusedInput" class="control-label">{{ form_label( form.alias ) }}</label>
             <div class="controls">
                 {{ form_widget(form.alias, { 'attr': {'class': 'input-xlarge focused'} })}}

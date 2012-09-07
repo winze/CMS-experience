@@ -17,10 +17,15 @@ class PageType extends AbstractType {
         $builder
                 ->add('name', 'text', array('label' => "Page"))
                 ->add('alias', 'text', array('label' => "Url"))
+                ->add('aliasEn', 'text', array('label' => "Url (Anglais)"))
                 ->add('title', 'text', array('label' => "Titre"))
+                ->add('titleEn', 'text', array('label' => "Titre (Anglais)"))
                 ->add('metaData', 'textarea', array('label' => "Méta data"))
+                ->add('metaDataEn', 'textarea', array('label' => "Méta data (Anglais)"))
                 ->add('metaDescription', 'textarea', array('label' => "Méta description"))
+                ->add('metaDescriptionEn', 'textarea', array('label' => "Méta description (Anglais)"))
                 ->add('metaKey', 'textarea', array('label' => "Méta Key"))
+                ->add('metaKeyEn', 'textarea', array('label' => "Méta Key (Anglais)"))
 
         ;
     }

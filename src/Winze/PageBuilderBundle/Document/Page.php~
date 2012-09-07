@@ -8,7 +8,8 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  * Description of Page
  *
  * @author Vincent
- * @MongoDB\Document
+ * @MongoDB\Document(repositoryClass="Winze\PageBuilderBundle\Repository\PageRepository")
+ * 
  */
 class Page {
 
@@ -32,7 +33,8 @@ class Page {
 
     /**
      * @MongoDB\ReferenceMany(
-     *     targetDocument="Winze\PageBuilderBundle\Document\Page"
+     *     targetDocument="Winze\PageBuilderBundle\Document\Page",
+     *     cascade="all"
      * )
      */
     protected $pageChildren;
@@ -66,6 +68,15 @@ class Page {
     protected $metaKey;
 
     /**
+     * @MongoDB\ReferenceMany(
+     *     targetDocument="Winze\PageBuilderBundle\Document\Contenu",
+     *     cascade="all",
+     *     sort={"position"=-1}
+     * )
+     */
+    protected $contenus;
+
+    /**
      * @MongoDB\Boolean
      */
     protected $isActif;
@@ -87,4 +98,44 @@ class Page {
      */
     protected $updateAt;
 
+    /**
+     * @MongoDB\PreUpdate 
+     */
+    public function preUpdated() {
+        $this->updateAt = new \DateTime();
+    }
+
+    /**
+     * Fontion qui permet de savoir si le contenu est associé à la page
+     * @param string $id
+     * @return boolean
+     */
+    public function contenuExists($id) {
+        if (count($this->getContenus()) > 0) {
+            foreach ($this->getContenus() as $key=>$contenu) {
+                if ($contenu->getId() == $id) {
+                    return $key;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Fonction de suppression d'un contenu d'un page
+     * @param string $id Id du contenu à supprimer
+     * @return boolean/Winze\PageBuilderBundle\Document\Contenu Retourn false si les contenu n'est pas associé
+     *                      à la page sinon retourne l'objet contenu
+     */
+    public function removeContenu($id) {
+        $key = $this->contenuExists($id);
+        if($key === false){
+            return false;
+        }
+
+        $contenu = $this->contenus[$key];
+        unset($this->contenus[$key]);
+        return $contenu;
+    }
+   
 }

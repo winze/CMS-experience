@@ -1,0 +1,5 @@
+{% extends 'WinzeBackendBundle::layout.html.twig' %}
+{% block content %}
+<h2>Création d'un diaporama pour l'article : {{ article.getTitle }}</h2>
+{% include 'WinzeBackendBundle:Backend:diaporama.form.html.twig' with {'form':form, 'formAction':path('admin_page_contenu_article_add_diaporama',{'idPage':page.getId, 'idArticle':article.getId})} %}
+{% endblock %}

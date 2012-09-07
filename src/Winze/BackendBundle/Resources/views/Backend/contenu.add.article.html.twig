@@ -1,0 +1,11 @@
+{% extends 'WinzeBackendBundle::layout.html.twig' %}
+{% block content %}
+<ul class="breadcrumb">
+    <li><a href="{{ path('admin_index')}}">Accueil</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('admin_page_index')}}">Pages</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('admin_page_edit', {'id':page.getId})}}">Contenu</a> <span class="divider">/</span></li>
+    <li class="active">Ajouter Article</li>
+</ul>
+<h2>Création d'un article pour la page : {{ page.getName }}</h2>
+{% include 'WinzeBackendBundle:Backend:article.form.html.twig' with {'form':form, 'formAction':path('admin_page_add_contenu_article',{'id':page.getId}), 'article':article} %}
+{% endblock %}

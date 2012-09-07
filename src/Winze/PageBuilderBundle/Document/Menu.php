@@ -28,6 +28,12 @@ class Menu {
      * @MongoDB\String
      */
     protected $title;
+
+    /**
+     * Title affiche dans le menu à l'utilisateur
+     * @MongoDB\String
+     */
+    protected $titleEn;
     protected $alias;
 
     /**
@@ -37,8 +43,7 @@ class Menu {
 
     /**
      * @MongoDB\ReferenceOne(
-     *     targetDocument="Winze\PageBuilderBundle\Document\Menu",
-     *     cascade="all"
+     *     targetDocument="Winze\PageBuilderBundle\Document\Menu"
      * )
      */
     protected $menuPatern;
@@ -92,12 +97,53 @@ class Menu {
         $this->updateAt = new \DateTime();
     }
 
+    public function menuChildrenExist($id) {
+        if (count($this->getMenuChildren()) > 0) {
+            foreach ($this->getMenuChildren() as $key => $menu) {
+                if ($menu->getId() == $id) {
+                    return $key;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Fonction de suppression d'un contenu d'un page
+     * @param string $id Id du contenu à supprimer
+     * @return boolean/Winze\PageBuilderBundle\Document\Contenu Retourn false si les contenu n'est pas associé
+     *                      à la page sinon retourne l'objet contenu
+     */
+    public function removeMenuChildren($id) {
+        $key = $this->menuChildrenExist($id);
+        if ($key === false) {
+            return false;
+        }
+
+        $menu = $this->menuChildren[$key];
+        unset($this->menuChildren[$key]);
+        return $menu;
+    }
+
+    /* -------------------------
+     * GETTER & SETTER
+     */
+
+    public function getTitleEn() {
+        return $this->titleEn;
+    }
+
+    public function setTitleEn($titleEn) {
+        $this->titleEn = $titleEn;
+    }
+
     public function getAlias() {
         return $this->alias;
     }
 
     public function setAlias($alias) {
         $this->alias = $alias;
+        return $this;
     }
 
     /**

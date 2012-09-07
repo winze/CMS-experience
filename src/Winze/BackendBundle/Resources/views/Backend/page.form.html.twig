@@ -25,12 +25,34 @@
             </div>
         </div>
         <div class="control-group">
+            <label for="focusedInput" class="control-label">{{ form_label( form.titleEn ) }}</label>
+            <div class="controls">
+                {{ form_widget(form.titleEn, { 'attr': {'class': 'input-xlarge focused'} })}}
+                {% if form_errors(form.titleEn) %}
+                <div class="alert alert-error">
+                    {{ form_errors(form.titleEn)}}
+                </div>  
+                {% endif %}
+            </div>
+        </div>
+        <div class="control-group">
             <label for="focusedInput" class="control-label">{{ form_label( form.alias ) }}</label>
             <div class="controls">
                 {{ form_widget(form.alias, { 'attr': {'class': 'input-xlarge focused'} })}}
                 {% if form_errors(form.alias) %}
                 <div class="alert alert-error">
                     {{ form_errors(form.alias)}}
+                </div>  
+                {% endif %}
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="focusedInput" class="control-label">{{ form_label( form.aliasEn ) }}</label>
+            <div class="controls">
+                {{ form_widget(form.aliasEn, { 'attr': {'class': 'input-xlarge focused'} })}}
+                {% if form_errors(form.aliasEn) %}
+                <div class="alert alert-error">
+                    {{ form_errors(form.aliasEn)}}
                 </div>  
                 {% endif %}
             </div>
@@ -47,6 +69,17 @@
             </div>
         </div>
         <div class="control-group">
+            <label for="focusedInput" class="control-label">{{ form_label( form.metaDataEn ) }}</label>
+            <div class="controls">
+                {{ form_widget(form.metaDataEn, { 'attr': {'class': 'input-xlarge focused'} })}}
+                {% if form_errors(form.metaDataEn) %}
+                <div class="alert alert-error">
+                    {{ form_errors(form.metaDataEn)}}
+                </div>  
+                {% endif %}
+            </div>
+        </div>
+        <div class="control-group">
             <label for="focusedInput" class="control-label">{{ form_label( form.metaDescription ) }}</label>
             <div class="controls">
                 {{ form_widget(form.metaDescription, { 'attr': {'class': 'input-xlarge focused'} })}}
@@ -58,12 +91,34 @@
             </div>
         </div>
         <div class="control-group">
+            <label for="focusedInput" class="control-label">{{ form_label( form.metaDescriptionEn ) }}</label>
+            <div class="controls">
+                {{ form_widget(form.metaDescriptionEn, { 'attr': {'class': 'input-xlarge focused'} })}}
+                {% if form_errors(form.metaDescriptionEn) %}
+                <div class="alert alert-error">
+                    {{ form_errors(form.metaDescriptionEn)}}
+                </div>  
+                {% endif %}
+            </div>
+        </div>
+        <div class="control-group">
             <label for="focusedInput" class="control-label">{{ form_label( form.metaKey ) }}</label>
             <div class="controls">
                 {{ form_widget(form.metaKey, { 'attr': {'class': 'input-xlarge focused'} })}}
                 {% if form_errors(form.metaKey) %}
                 <div class="alert alert-error">
                     {{ form_errors(form.metaKey)}}
+                </div>  
+                {% endif %}
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="focusedInput" class="control-label">{{ form_label( form.metaKeyEn ) }}</label>
+            <div class="controls">
+                {{ form_widget(form.metaKeyEn, { 'attr': {'class': 'input-xlarge focused'} })}}
+                {% if form_errors(form.metaKeyEn) %}
+                <div class="alert alert-error">
+                    {{ form_errors(form.metaKeyEn)}}
                 </div>  
                 {% endif %}
             </div>

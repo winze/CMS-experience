@@ -1,0 +1,9 @@
+<fieldset>
+    <legend>Modification Diaporama</legend>
+    {% include 'WinzeBackendBundle:Backend:diaporama.form.html.twig' with {'form':formDiaporama, 'formAction':path('admin_page_contenu_article_edit_diaporama',{'idPage':page.getId,'idArticle':article.getId, 'idDiaporama':diaporama.getId})} %}
+</fieldset>
+<fieldset>
+    <legend>Gestion des images</legend>
+    {% include 'WinzeBackendBundle:Backend:diaporama.picture.liste.html.twig' with {'pictures': diaporama.getDiaporamaPictures } %}
+            {% include 'WinzeBackendBundle:Backend:diaporama.piture.form.html.twig' with {'form':formDiaporamaPicture, 'formAction':path('admin_page_contenu_article_diaporama_add_picture',{'idPage':page.getId,'idArticle':article.getId, 'idDiaporama':diaporama.getId})} %}
+</fieldset>

@@ -1,0 +1,9 @@
+{% if diaporama.getDiaporamaPictures|length > 0%}
+<ul class="article-diaporama">
+    {% for dp in diaporama.getDiaporamaPictures %}
+        {% if dp.getIsActif%}
+        <li><img src="{{ dp.getPicture.getSrc}}" class="article-diaporama-picture" width="128"/></li>
+        {% endif %}
+    {% endfor %}
+</ul>
+{% endif %}

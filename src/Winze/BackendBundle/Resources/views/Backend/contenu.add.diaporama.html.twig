@@ -1,0 +1,11 @@
+{% extends 'WinzeBackendBundle::layout.html.twig' %}
+{% block content %}
+<ul class="breadcrumb">
+    <li><a href="{{ path('admin_index')}}">Accueil</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('admin_page_index')}}">Pages</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('admin_page_edit', {'id':page.getId})}}">Contenu</a> <span class="divider">/</span></li>
+    <li class="active">Ajouter Diaporama</li>
+</ul>
+<h2>Création d'un diaporama pour la page : {{ page.getName }}</h2>
+{% include 'WinzeBackendBundle:Backend:diaporama.form.html.twig' with {'form':form, 'formAction':path('admin_page_add_contenu_diaporama',{'id':page.getId})} %}
+{% endblock %}

@@ -1,5 +1,10 @@
 {% extends 'WinzeBackendBundle::layout.html.twig' %}
 {% block content %}
+<ul class="breadcrumb">
+    <li><a href="{{ path('admin_index')}}">Accueil</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('admin_menu_index')}}">Menu</a> <span class="divider">/</span></li>
+    <li class="active">Ajouter sous menu</li>
+</ul>
 <h2>Ajouter une sous Menu</h2>
 {% include 'WinzeBackendBundle:Backend:menu.form.html.twig' with {'formAction':path('admin_menu_add_menu', {'id':menuPatern.getId}), 'form':form}%}
 {% endblock %}

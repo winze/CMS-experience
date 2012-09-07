@@ -1,0 +1,44 @@
+{% extends 'WinzeBackendBundle::layout.html.twig' %}
+{% block content %}
+<ul class="breadcrumb">
+    <li><a href="{{ path('admin_index')}}">Accueil</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('admin_page_index')}}">Pages</a> <span class="divider">/</span></li>
+    <li class="active">Editer Page</li>
+</ul>
+<h2>Modification de la page : {{ page.getName }}</h2>
+{% if app.session.hasFlash('notice') %}
+<div class="alert alert-success">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    {{ app.session.flash('notice') }}
+</div>
+{% endif %}
+{% if app.session.hasFlash('error') %}
+<div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    {{ app.session.flash('error') }}
+</div>
+{% endif %}
+<div class="tabbable">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab1" data-toggle="tab">Editer page</a></li>
+        <li><a href="#tab2" data-toggle="tab">Contenu</a></li>
+        <li><a href="#tab3" data-toggle="tab">Sous page</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab1">
+            {% include 'WinzeBackendBundle:Backend:page.form.html.twig' with {'formAction':path('admin_page_edit', {'id':page.getId}), 'form':form}%}
+        </div>
+        <div class="tab-pane" id="tab2">
+            {% include 'WinzeBackendBundle:Backend:contenu.list.html.twig' with {'contenus': page.getContenus} %}
+            <div class="block-action">
+                <a href="{{ path('admin_page_add_contenu_article', {'id':page.getId}) }}"><i class="icon-plus"></i> Ajouter article</a>
+                &nbsp;|&nbsp;<a href="{{ path('admin_page_add_contenu_diaporama', {'id':page.getId}) }}"><i class="icon-plus"></i> Ajouter diaporama</a>
+            </div>
+        </div>
+        <div class="tab-pane" id="tab3">
+            {% include 'WinzeBackendBundle:Backend:page.list.html.twig' with {'pages': page.getPageChildren} %}
+            <a href="{{ path('admin_page_add_page', {'id': page.getId}) }}"><i class="icon-plus"></i> Ajouter une sous Page</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

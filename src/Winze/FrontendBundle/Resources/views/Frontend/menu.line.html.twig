@@ -1,0 +1,26 @@
+<li 
+    {% if locale == 'en' %}
+        {% if menu.getPage.getAliasEn == url%}
+            class="active"
+        {% endif %}
+    {% elseif locale == 'fr' %}
+        {% if menu.getPage.getAlias == url%}
+            class="active"
+        {% endif %}
+    {% endif %}
+    >
+    {% if locale == 'en' %}
+        <a href="/{{locale}}{{menu.getPage.getAlias}}">{{menu.getTitleEn}}</a>
+    {% elseif locale == 'fr' %}
+        <a href="/{{locale}}{{menu.getPage.getAlias}}">{{menu.getTitle}}</a>
+    {% endif %}
+    {% if menu.getMenuChildren|length > 0 %}
+    <ul>
+        {% for menuChildren in menu.getMenuChildren %}
+            {% if menuChildren.getIsActif %}
+                {% include 'WinzeFrontendBundle:Frontend:menu.line.html.twig' with {'menu':menuChildren} %}
+            {% endif %}
+        {% endfor %}
+    </ul>
+    {% endif %}
+</li>

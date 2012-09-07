@@ -10,7 +10,7 @@ root {
     display: block;
 }
 .content{
-    margin-top: 40px;
+    margin-top: 45px;
     border-color: #252525;
 }
 .line-1{
@@ -30,4 +30,12 @@ root {
 }
 .line-6 .line-title{
     padding-left: 65px;
+}
+
+a.btn-activated{
+    cursor: pointer;
+    text-align: center;
+}
+.btn-actif{
+    width:45px;
 }

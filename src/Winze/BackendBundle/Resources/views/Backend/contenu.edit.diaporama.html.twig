@@ -1,0 +1,37 @@
+{% extends 'WinzeBackendBundle::layout.html.twig' %}
+{% block content %}
+<ul class="breadcrumb">
+    <li><a href="{{ path('admin_index')}}">Accueil</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('admin_page_index')}}">Pages</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('admin_page_edit', {'id':page.getId})}}">Contenu</a> <span class="divider">/</span></li>
+    <li class="active">Diaporama</li>
+</ul>
+<h2>Modification du diaporama : {{ diaporama.getTitle }}</h2>
+{% if app.session.hasFlash('notice') %}
+<div class="alert alert-success">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    {{ app.session.flash('notice') }}
+</div>
+{% endif %}
+{% if app.session.hasFlash('error') %}
+<div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    {{ app.session.flash('error') }}
+</div>
+{% endif %}
+<div class="tabbable">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab1" data-toggle="tab">Editer diaporama</a></li>
+        <li><a href="#tab2" data-toggle="tab">Images</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab1">
+            {% include 'WinzeBackendBundle:Backend:diaporama.form.html.twig' with {'form':formDiaporama, 'formAction':path('admin_diaporama_edit',{'idPage':page.getId, 'idDiaporama':diaporama.getId})} %}
+        </div>
+        <div class="tab-pane" id="tab2">
+            {% include 'WinzeBackendBundle:Backend:diaporama.picture.liste.html.twig' with {'pictures': diaporama.getDiaporamaPictures } %}
+            {% include 'WinzeBackendBundle:Backend:diaporama.piture.form.html.twig' with {'form':formDiaporamaPicture, 'formAction':path('admin_diaporama_add_picture',{'idPage':page.getId, 'idDiaporama':diaporama.getId})} %}
+        </div>
+    </div>
+</div>
+{% endblock %}

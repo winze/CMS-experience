@@ -21,6 +21,8 @@ class AppKernel extends Kernel
             new Winze\PageBuilderBundle\WinzePageBuilderBundle(),
             new Winze\BackendBundle\WinzeBackendBundle(),
             new Winze\FrontendBundle\WinzeFrontendBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
+            new Winze\UserBundle\WinzeUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

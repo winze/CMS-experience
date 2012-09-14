@@ -19,7 +19,8 @@ class DiaporamaPicture {
 
     /**
      * @MongoDB\ReferenceOne(
-     *     targetDocument="Winze\PageBuilderBundle\Document\Diaporama"
+     *     targetDocument="Winze\PageBuilderBundle\Document\Diaporama",
+     *     inversedBy="diaporamaPictures"
      * )
      */
     protected $diaporama;

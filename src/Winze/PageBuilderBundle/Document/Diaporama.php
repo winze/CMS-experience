@@ -34,7 +34,9 @@ class Diaporama {
     /**
      * @MongoDB\ReferenceMany(
      *     targetDocument="Winze\PageBuilderBundle\Document\DiaporamaPicture",
-     *      cascade="all"
+     *     cascade="all",
+     *     mappedBy="diaporama",
+     *     sort={"position"=1}
      * )
      */
     protected $diaporamaPictures;

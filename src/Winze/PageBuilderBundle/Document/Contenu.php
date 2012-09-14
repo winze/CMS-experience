@@ -19,7 +19,8 @@ class Contenu {
 
     /**
      * @MongoDB\ReferenceOne(
-     *     targetDocument="Winze\PageBuilderBundle\Document\Page"
+     *     targetDocument="Winze\PageBuilderBundle\Document\Page",
+     *     inversedBy="contenus"
      * )
      */
     protected $page;
@@ -27,7 +28,7 @@ class Contenu {
     /**
      * @MongoDB\Int
      */
-    protected $position=1;
+    protected $position = 1;
 
     /**
      * @MongoDB\String
@@ -80,14 +81,12 @@ class Contenu {
      */
     protected $updateAt;
 
-
     /**
      * Get id
      *
      * @return id $id
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -97,8 +96,7 @@ class Contenu {
      * @param Winze\PageBuilderBundle\Document\Page $page
      * @return Contenu
      */
-    public function setPage(\Winze\PageBuilderBundle\Document\Page $page)
-    {
+    public function setPage(\Winze\PageBuilderBundle\Document\Page $page) {
         $this->page = $page;
         return $this;
     }
@@ -108,8 +106,7 @@ class Contenu {
      *
      * @return Winze\PageBuilderBundle\Document\Page $page
      */
-    public function getPage()
-    {
+    public function getPage() {
         return $this->page;
     }
 
@@ -119,8 +116,7 @@ class Contenu {
      * @param int $position
      * @return Contenu
      */
-    public function setPosition($position)
-    {
+    public function setPosition($position) {
         $this->position = $position;
         return $this;
     }
@@ -130,8 +126,7 @@ class Contenu {
      *
      * @return int $position
      */
-    public function getPosition()
-    {
+    public function getPosition() {
         return $this->position;
     }
 
@@ -141,8 +136,7 @@ class Contenu {
      * @param string $style
      * @return Contenu
      */
-    public function setStyle($style)
-    {
+    public function setStyle($style) {
         $this->style = $style;
         return $this;
     }
@@ -152,8 +146,7 @@ class Contenu {
      *
      * @return string $style
      */
-    public function getStyle()
-    {
+    public function getStyle() {
         return $this->style;
     }
 
@@ -163,8 +156,7 @@ class Contenu {
      * @param Winze\PageBuilderBundle\Document\Article $article
      * @return Contenu
      */
-    public function setArticle(\Winze\PageBuilderBundle\Document\Article $article)
-    {
+    public function setArticle(\Winze\PageBuilderBundle\Document\Article $article) {
         $this->article = $article;
         return $this;
     }
@@ -174,8 +166,7 @@ class Contenu {
      *
      * @return Winze\PageBuilderBundle\Document\Article $article
      */
-    public function getArticle()
-    {
+    public function getArticle() {
         return $this->article;
     }
 
@@ -185,8 +176,7 @@ class Contenu {
      * @param Winze\PageBuilderBundle\Document\Diaporama $diaporama
      * @return Contenu
      */
-    public function setDiaporama(\Winze\PageBuilderBundle\Document\Diaporama $diaporama)
-    {
+    public function setDiaporama(\Winze\PageBuilderBundle\Document\Diaporama $diaporama) {
         $this->diaporama = $diaporama;
         $diaporama->setContenu($this);
         return $this;
@@ -197,8 +187,7 @@ class Contenu {
      *
      * @return Winze\PageBuilderBundle\Document\Diaporama $diaporama
      */
-    public function getDiaporama()
-    {
+    public function getDiaporama() {
         return $this->diaporama;
     }
 
@@ -208,8 +197,7 @@ class Contenu {
      * @param Winze\PageBuilderBundle\Document\Form $form
      * @return Contenu
      */
-    public function setForm(\Winze\PageBuilderBundle\Document\Form $form)
-    {
+    public function setForm(\Winze\PageBuilderBundle\Document\Form $form) {
         $this->form = $form;
         return $this;
     }
@@ -219,8 +207,7 @@ class Contenu {
      *
      * @return Winze\PageBuilderBundle\Document\Form $form
      */
-    public function getForm()
-    {
+    public function getForm() {
         return $this->form;
     }
 
@@ -230,8 +217,7 @@ class Contenu {
      * @param boolean $isActif
      * @return Contenu
      */
-    public function setIsActif($isActif)
-    {
+    public function setIsActif($isActif) {
         $this->isActif = $isActif;
         return $this;
     }
@@ -241,8 +227,7 @@ class Contenu {
      *
      * @return boolean $isActif
      */
-    public function getIsActif()
-    {
+    public function getIsActif() {
         return $this->isActif;
     }
 
@@ -252,8 +237,7 @@ class Contenu {
      * @param int $roalRead
      * @return Contenu
      */
-    public function setRoalRead($roalRead)
-    {
+    public function setRoalRead($roalRead) {
         $this->roalRead = $roalRead;
         return $this;
     }
@@ -263,8 +247,7 @@ class Contenu {
      *
      * @return int $roalRead
      */
-    public function getRoalRead()
-    {
+    public function getRoalRead() {
         return $this->roalRead;
     }
 
@@ -274,8 +257,7 @@ class Contenu {
      * @param date $createdAt
      * @return Contenu
      */
-    public function setCreatedAt($createdAt)
-    {
+    public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
         return $this;
     }
@@ -285,8 +267,7 @@ class Contenu {
      *
      * @return date $createdAt
      */
-    public function getCreatedAt()
-    {
+    public function getCreatedAt() {
         return $this->createdAt;
     }
 
@@ -296,8 +277,7 @@ class Contenu {
      * @param date $updateAt
      * @return Contenu
      */
-    public function setUpdateAt($updateAt)
-    {
+    public function setUpdateAt($updateAt) {
         $this->updateAt = $updateAt;
         return $this;
     }
@@ -307,8 +287,8 @@ class Contenu {
      *
      * @return date $updateAt
      */
-    public function getUpdateAt()
-    {
+    public function getUpdateAt() {
         return $this->updateAt;
     }
+
 }

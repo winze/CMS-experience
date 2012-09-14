@@ -99,7 +99,8 @@ class Page {
      * @MongoDB\ReferenceMany(
      *     targetDocument="Winze\PageBuilderBundle\Document\Contenu",
      *     cascade="all",
-     *     sort={"position"=-1}
+     *     mappedBy="page",
+     *     sort={"position"=1}
      * )
      */
     protected $contenus;

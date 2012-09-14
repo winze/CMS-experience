@@ -19,9 +19,9 @@
     {% if page.getContenus|length > 0 %}
         {% for contenu in page.getContenus %}
             {% if contenu.getArticle and contenu.getIsActif%}
-                {%include 'WinzeFrontendBundle:Frontend:page.print.article.html.twig' with {'article':contenu.getArticle}%}
+                <br />{%include 'WinzeFrontendBundle:Frontend:page.print.article.html.twig' with {'article':contenu.getArticle}%}
             {% elseif contenu.getDiaporama and contenu.getIsActif %}
-                {%include 'WinzeFrontendBundle:Frontend:page.print.diaporama.html.twig' with {'diaporama':contenu.getDiaporama}%}
+                <br />{%include 'WinzeFrontendBundle:Frontend:page.print.diaporama.html.twig' with {'diaporama':contenu.getDiaporama}%}
             {% endif %}
         {% endfor %}
     {% endif %}

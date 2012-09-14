@@ -1,9 +1,9 @@
 {% if diaporama.getDiaporamaPictures|length > 0%}
-<ul class="article-diaporama">
+<div id="products_example" class="diaporama">
     {% for dp in diaporama.getDiaporamaPictures %}
         {% if dp.getIsActif%}
-        <li><img src="{{ dp.getPicture.getSrc}}" class="article-diaporama-picture" width="128"/></li>
+        <a href="{{ dp.getPicture.getMediumSrc}}"><img src="{{ dp.getPicture.getMiniSrc}}" data-big="{{ dp.getPicture.getLargeSrc}}" alt="1144953 3 2x"></a>
         {% endif %}
     {% endfor %}
-</ul>
+</div>
 {% endif %}

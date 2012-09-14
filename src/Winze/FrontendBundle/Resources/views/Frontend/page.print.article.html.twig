@@ -3,7 +3,7 @@
     {% if article.getPicture %}
         <img src="{{ article.getPicture.getSrc }}" class="article-picture"/>
     {% endif %}
-    {{ article.getBodyEn }}
+    {{ article.getBodyEn|raw }}
     {% if article.getDiaporama %}
         {%include 'WinzeFrontendBundle:Frontend:article.diaporama.html.twig' with {'diaporama':article.getDiaporama}%}
     {% endif %}
@@ -12,7 +12,7 @@
     {% if article.getPicture %}
         <img src="{{ article.getPicture.getSrc }}" class="article-picture"/>
     {% endif %}
-    {{ article.getBody }}
+    {{ article.getBody|raw }}
     {% if article.getDiaporama %}
         {%include 'WinzeFrontendBundle:Frontend:article.diaporama.html.twig' with {'diaporama':article.getDiaporama}%}
     {% endif %}

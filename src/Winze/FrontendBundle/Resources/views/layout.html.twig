@@ -1,7 +1,17 @@
 {%extends '::base.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/winzefrontend/css/style.css') }}">
+{% endblock %}
 {% block body %}
 <div class="container">
 {% block menu %}{% endblock %}
 {% block content %}{% endblock %}
 </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="{{asset('bundles/winzefrontend/Slides/source/slides.min.jquery.js')}}"></script>
+    <script src="{{asset('bundles/winzefrontend/jcarousel/lib/jquery.jcarousel.min.js')}}"></script>
+    <script src="{{asset('bundles/winzefrontend/galleria/galleria-1.2.8.min.js')}}"></script>
+    <script src="{{asset('bundles/winzefrontend/js/global.js')}}"></script>
 {% endblock %}
